@@ -1,0 +1,9 @@
+🟢 Welcome message: Welcome, Julia Donaldson
+🟢 Member ID: Member ID: 850497953
+🟢 Profile name is valid: Julia Donaldson
+🟢 DOB is valid: 12-31-1990
+🟢 Email is valid: brucewaynetest123+julia@gmail.com
+🟢 Gender is valid: Female
+🟢 Address is valid: PO BOX 7, SKIPPACK, PA 19474, US
+[INFO] Filter applied: Last 60 Months
+[DEBUG] Filters to apply: undefined

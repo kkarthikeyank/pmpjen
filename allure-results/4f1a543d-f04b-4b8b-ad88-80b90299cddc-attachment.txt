@@ -1,0 +1,6 @@
+Checkbox not found for: provider - Nicole Koepke_provider
+Checkbox not found for: provider - John Smith_provider
+Checkbox not found for: provider - Emily Chen_provider
+Checkbox not found for: payee - Integra Partners Llc_payee
+Checkbox not found for: diagnosis - Z34.83 -
+Checkbox not found or already unchecked: payee - Integra Partners Llc_payee

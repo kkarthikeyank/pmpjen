@@ -1,0 +1,12 @@
+
+📅 Checking date range #1: January 1, 2024 → November 30, 2024
+✅ No abnormal test results found.
+✅ No normal/non-abnormal test results found.
+
+📅 Checking date range #2: January 1, 2024 → January 1, 2025
+🔴 Abnormal test results found:
+  1. Calcium SerPl-sCnc
+  2. TEst2
+  3. Calcium SerPl-sCnc
+  4. TEst2
+✅ No normal/non-abnormal test results found.

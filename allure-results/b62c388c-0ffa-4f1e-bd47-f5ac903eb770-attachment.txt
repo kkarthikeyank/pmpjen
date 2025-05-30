@@ -1,0 +1,5 @@
+Running test for Physician: Scott Down, Date Range: Last 60 Months
+✅ Abnormal checkbox is checked: true
+✅ No abnormal test results for Scott Down in Last 60 Months.
+Checkbox is now: Unchecked undefined
+✅ No UNABNORMAL test results for Scott Down in Last 60 Months.

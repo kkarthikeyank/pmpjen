@@ -1,0 +1,3 @@
+[INFO] Searched Doctor Name: undefined
+[INFO] Selected Plan: undefined
+[INFO] No doctor name displayed

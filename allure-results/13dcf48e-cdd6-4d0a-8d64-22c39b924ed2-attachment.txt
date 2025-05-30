@@ -1,0 +1,102 @@
+🟢 Welcome message: Welcome, Julia Donaldson
+🟢 Member ID: Member ID: 850497953
+🟢 Profile name is valid: Julia Donaldson
+🟢 DOB is valid: 12-31-1990
+🟢 Email is valid: brucewaynetest123+julia@gmail.com
+🟢 Gender is valid: Female
+🟢 Address is valid: PO BOX 7, SKIPPACK, PA 19474, US
+[INFO] Filter applied: Last 60 Months
+[INFO] Checked: Nicole Koepke
+[INFO] Checked: Integra Partners Llc
+[INFO] Filters applied
+[INFO] Page scrolled to bottom
+[PROVIDER 1]: Nicole Koepke
+[PROVIDER 2]: Nicole Koepke
+[PROVIDER 3]: Nicole Koepke
+[PROVIDER 4]: Nicole Koepke
+[PAYEE 1]: Integra Partners Llc
+[PAYEE 2]: Integra Partners Llc
+[PAYEE 3]: Integra Partners Llc
+[PAYEE 4]: Integra Partners Llc
+[INFO] Unchecked provider: Nicole Koepke
+[INFO] Unchecked payee: Integra Partners Llc
+[INFO] Unchecked filters applied
+[INFO] Page scrolled to bottom
+
+--- Filter Selection ---
+Date Range: Last 3 Months
+Physician Name Searched: Scott Down
+Physician 1: Scott Down
+Physician 2: Scott Down
+Physician 3: Scott Down
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Physician Name Searched:  Scott Down 
+Physician 1: Scott Down
+Physician 2: Scott Down
+Physician 3: Scott Down
+
+
+--- Filter Selection ---
+Date Range: Last 3 Months
+Lab Vendor Name Searched: Life Labs
+No lab vendors found.
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Lab Vendor Name Searched: Precision Labs
+Lab Vendor 1: Precision Labs
+
+
+--- Filter Selection ---
+Date Range: Last 3 Months
+Lab Vendor Name Searched: XYZ Medical
+No lab vendors found.
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Test Name Searched: Laboratory
+Test Name 1: Laboratory N/A
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Test Name Searched: Calcium SerPl-sCnc
+Test Name 1: Calcium SerPl-sCnc ABNORMAL
+Test Name 3: Calcium SerPl-sCnc ABNORMAL
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Test Name Searched: TEst2
+Test Name 2: TEst2 ABNORMAL
+Test Name 4: TEst2 ABNORMAL
+
+
+📅 Checking date range #1: January 1, 2024 → November 30, 2024
+☑️ Checkbox: Selected (Abnormal)
+🔴 Abnormal test results found:
+  1. Calcium SerPl-sCnc
+  2. TEst2
+  3. Calcium SerPl-sCnc
+  4. TEst2
+⬜ Checkbox: Unselected (Abnormal)
+🟢 Non-abnormal test results found:
+  1. Laboratory
+
+📅 Checking date range #2: January 1, 2024 → January 1, 2025
+☑️ Checkbox: Selected (Abnormal)
+🔴 Abnormal test results found:
+  1. Calcium SerPl-sCnc
+  2. TEst2
+  3. Calcium SerPl-sCnc
+  4. TEst2
+⬜ Checkbox: Unselected (Abnormal)
+🟢 Non-abnormal test results found:
+  1. Laboratory
+Added search physician ' Down' and months filter 'Last 36 Months'
+checkbox checked 

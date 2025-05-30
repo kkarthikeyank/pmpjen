@@ -1,0 +1,3 @@
+[DOCTOR 1]: Aaron Dorfman
+  └─ Plan: Health Partners
+[INFO] No doctor name displayed

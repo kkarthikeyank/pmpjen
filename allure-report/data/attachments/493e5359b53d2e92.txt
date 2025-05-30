@@ -1,0 +1,4 @@
+Login URL: https://hikepmp-dev.smilecdr.com/member-portal/
+Username: Julia
+Password: Batman123
+Using login URL: https://hikepmp-dev.smilecdr.com/member-portal/

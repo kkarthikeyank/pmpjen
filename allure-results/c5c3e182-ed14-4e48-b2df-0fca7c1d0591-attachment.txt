@@ -1,0 +1,14 @@
+
+--- Filter Selection ---
+Date Range: Last 3 Months
+Physician Name Searched: Scott Down
+No physician found.
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Physician Name Searched:  Scott Down 
+Physician 1: Scott Down
+Physician 2: Scott Down
+Physician 3: Scott Down
+

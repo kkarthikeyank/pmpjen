@@ -1,0 +1,9 @@
+🟢 Welcome message: Welcome, Julia Donaldson
+🟢 Member ID: Member ID: 850497953
+Physician Name Found: Scott Down
+✅ Found Lab Result: Precision Labs
+🔍 Clicked on "Last 36 Months" button.
+🔍 Selected "Last 3 Months" option.
+🔍 Expected Date Range: from 01-26-2025 to 04-26-2025
+✅ Date range successfully validated.
+✅ "No Lab Results to Show" is visible.

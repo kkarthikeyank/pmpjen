@@ -1,0 +1,20 @@
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Test Name Searched: Laboratory
+Test Name 1: Laboratory N/A
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Test Name Searched: Calcium SerPl-sCnc
+Test Name 1: Calcium SerPl-sCnc ABNORMAL
+Test Name 3: Calcium SerPl-sCnc ABNORMAL
+
+
+--- Filter Selection ---
+Date Range: Last 60 Months
+Test Name Searched: TEst2
+Test Name 2: TEst2 ABNORMAL
+Test Name 4: TEst2 ABNORMAL
+

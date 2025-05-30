@@ -1,0 +1,162 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "claims-filtering-by-date-range;filter-claims-by-date-range-and-print-claims",
+        "keyword": "Scenario Outline",
+        "line": 86,
+        "name": "Filter claims by date range and print claims",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2572924
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1013354104
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 80,
+            "name": "I open the claims tab",
+            "match": {
+              "location": "file:/home/karthi/pmp/features/step-definitions/claimsSteps.js:276"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8171759258
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 81,
+            "name": "I filter claims by \"3 Months\"",
+            "match": {
+              "location": "file:/home/karthi/pmp/features/step-definitions/claimsSteps.js:282"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4074647768
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 82,
+            "name": "I see claims printed for \"3 Months\"",
+            "match": {
+              "location": "file:/home/karthi/pmp/features/step-definitions/claimsSteps.js:286"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 283118
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 285291904
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "claims-filtering-by-date-range;filter-claims-by-date-range-and-print-claims",
+        "keyword": "Scenario Outline",
+        "line": 87,
+        "name": "Filter claims by date range and print claims",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 367389
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1061933071
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 80,
+            "name": "I open the claims tab",
+            "match": {
+              "location": "file:/home/karthi/pmp/features/step-definitions/claimsSteps.js:276"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 20088720326,
+              "error_message": "page.waitForNavigation: Timeout 20000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"domcontentloaded\"\n============================================================\n    at ClaimsPage.openClaimsTab (/home/karthi/pmp/src/pages/ClaimsPage.js:83:21)\n    at async CustomWorld.<anonymous> (/home/karthi/pmp/features/step-definitions/claimsSteps.js:278:3)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 81,
+            "name": "I filter claims by \"6 Months\"",
+            "match": {
+              "location": "file:/home/karthi/pmp/features/step-definitions/claimsSteps.js:282"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 82,
+            "name": "I see claims printed for \"6 Months\"",
+            "match": {
+              "location": "file:/home/karthi/pmp/features/step-definitions/claimsSteps.js:286"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 207313675
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "claims-filtering-by-date-range",
+    "line": 74,
+    "keyword": "Feature",
+    "name": "Claims filtering by date range",
+    "tags": [],
+    "uri": "features/claims.feature"
+  }
+]

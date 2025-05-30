@@ -1,0 +1,14 @@
+
+📅 Checking date range #1: January 1, 2024 → November 30, 2024
+☑️ Checkbox: Selected (Abnormal)
+✅ No abnormal test results found.
+⬜ Checkbox: Unselected (Abnormal)
+🟢 Non-abnormal test results found:
+  1. Laboratory
+
+📅 Checking date range #2: January 1, 2024 → January 1, 2025
+☑️ Checkbox: Selected (Abnormal)
+✅ No abnormal test results found.
+⬜ Checkbox: Unselected (Abnormal)
+🟢 Non-abnormal test results found:
+  1. Laboratory

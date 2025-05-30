@@ -1,0 +1,23 @@
+🟢 Welcome message: Welcome, Anna Queensister
+🟢 Member ID: Member ID: 850497966
+🟢 Profile Name: NAME
+🟢 Name: NAME
+🟢 Date of Birth: DATE OF BIRTH
+🟢 Member ID: MEMBER ID
+🟢 Gender: GENDER
+🟢 Address: ADDRESS 1
+🟢 Phone Numbers: { home: ' ---- ', secondary: ' ---- ', cell: ' ---- ', work: ' ---- ' }
+{
+  name: 'NAME',
+  dob: 'DATE OF BIRTH',
+  email: null,
+  memberId: 'MEMBER ID',
+  gender: 'GENDER',
+  address: 'ADDRESS 1',
+  phoneNumbers: {
+    home: ' ---- ',
+    secondary: ' ---- ',
+    cell: ' ---- ',
+    work: ' ---- '
+  }
+}

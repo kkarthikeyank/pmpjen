@@ -1,0 +1,12 @@
+Selected Date Range: No date range selected
+Abnormal Checkbox is Unchecked
+Physicians displayed (3):
+ - Scott Down
+ - Scott Down
+ - Scott Down
+Checkbox checked
+No test results found
+No test results found
+Checkbox unchecked
+No test results found
+No test results found

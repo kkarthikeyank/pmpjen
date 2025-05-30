@@ -1,0 +1,44 @@
+Download failed or timed out: page.waitForEvent: Timeout 15000ms exceeded while waiting for event "download"
+=========================== logs ===========================
+waiting for event "download"
+============================================================
+    at ClaimsPage.downloadSummaryPDF (/home/karthi/pmp/src/pages/ClaimsPage.js:106:19)
+    at /home/karthi/pmp/src/tests/claimsearch.spec.js:94:1 {
+  name: 'TimeoutError',
+  [Symbol(step)]: {
+    stepId: 'pw:api@62',
+    location: {
+      file: '/home/karthi/pmp/src/pages/ClaimsPage.js',
+      line: 106,
+      column: 19,
+      function: 'ClaimsPage.downloadSummaryPDF'
+    },
+    category: 'pw:api',
+    title: 'page.waitForEvent',
+    apiName: 'page.waitForEvent',
+    params: { info: [Object] },
+    boxedStack: undefined,
+    steps: [],
+    attachmentIndices: [],
+    info: TestStepInfoImpl {
+      annotations: [],
+      _testInfo: [TestInfoImpl],
+      _stepId: 'pw:api@62'
+    },
+    complete: [Function: complete],
+    endWallTime: 1746348038648,
+    error: {
+      message: 'TimeoutError: page.waitForEvent: Timeout 15000ms exceeded while waiting for event "download"\n' +
+        '=========================== logs ===========================\n' +
+        'waiting for event "download"\n' +
+        '============================================================',
+      stack: 'TimeoutError: page.waitForEvent: Timeout 15000ms exceeded while waiting for event "download"\n' +
+        '=========================== logs ===========================\n' +
+        'waiting for event "download"\n' +
+        '============================================================\n' +
+        '    at ClaimsPage.downloadSummaryPDF (/home/karthi/pmp/src/pages/ClaimsPage.js:106:19)\n' +
+        '    at /home/karthi/pmp/src/tests/claimsearch.spec.js:94:1',
+      cause: undefined
+    }
+  }
+}

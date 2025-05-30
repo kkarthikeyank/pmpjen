@@ -1,0 +1,5 @@
+[INFO] Selected plan: Health Partners
+Plan:  Health Partners 
+doctor:  Aaron Dorfman 
+[INFO] Cleared input for next search
+

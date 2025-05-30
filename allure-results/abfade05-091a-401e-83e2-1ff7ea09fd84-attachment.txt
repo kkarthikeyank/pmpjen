@@ -1,0 +1,12 @@
+→ Applying custom date range: 03/10/2024 to 03/11/2025
+✅ Date filter applied: Date range: from 03-10-2024 to 03-11-2025
+✅ Claims found for range 03/10/2024 to 03/11/2025:
+→ Claim Number: 144111
+→ Opening claim 1...
+✅ Claim 1 details page opened.
+↩️ Returned to previous page after Claim 1.
+→ Claim Number: 144000
+→ Opening claim 2...
+✅ Claim 2 details page opened.
+↩️ Returned to previous page after Claim 2.
+[INFO] Filter panel opened.

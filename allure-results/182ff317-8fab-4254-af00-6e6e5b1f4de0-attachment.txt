@@ -1,0 +1,3 @@
+Running test for Physician: Scott Down, Date Range: Last 60 Months
+✅ Abnormal checkbox is checked: true
+Checkbox status is: Unchecked

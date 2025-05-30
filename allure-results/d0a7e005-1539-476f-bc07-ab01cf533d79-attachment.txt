@@ -1,0 +1,42 @@
+🟢 Welcome message: Welcome, Julia Donaldson
+🟢 Member ID: Member ID: 850497953
+🟢 Profile name is valid: Julia Donaldson
+🟢 DOB is valid: 12-31-1990
+🟢 Email is valid: brucewaynetest123+julia@gmail.com
+🟢 Gender is valid: Female
+🟢 Address is valid: PO BOX 7, SKIPPACK, PA 19474, US
+Filtering by: 3 Months
+No claims found
+Filtering by: 60 Months
+Claims found for 60 Months:
+Claim Number: 144111
+Claim Number: 144114
+Claim Number: 144115
+Claim Number: 144000
+→ Filtering by: 60 Months
+→ Searching for Claim Number: 144111
+✅ Claims found for 60 Months: 144111
+→ Claim Number: 144111
+→ Filtering by: 3 Months
+→ Searching for Claim Number: 144111
+❌ No claims found for 3 Months: 144111
+→ Applying custom date range: 03/10/2024 to 03/11/2025
+✅ Date filter applied: Date range: from 03-10-2024 to 03-11-2025
+✅ Claims found for range 03/10/2024 to 03/11/2025:
+→ Number of claim elements: 2
+→ Opening claim 1...
+✅ Claim 1 details page opened.
+↩️ Returned to previous page after Claim 1.
+→ Opening claim 2...
+✅ Claim 2 details page opened.
+↩️ Returned to previous page after Claim 2.
+🧹 Cleared filters after viewing all claims.
+[SKIPPED] Skipping filters and result print for: Last 60 Months
+
+--- Filter Selection ---
+Date Range: Last 3 Months
+Physician Name Searched: Scott Down
+Physician 1: Scott Down
+Physician 2: Scott Down
+Physician 3: Scott Down
+

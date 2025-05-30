@@ -1,0 +1,10 @@
+[INFO] Selected plan: Health Partners
+Plan:  Health Partners 
+doctor:  Aaron Dorfman 
+[INFO] Cleared input for next search
+
+[INFO] Selected plan: KidzPartners
+No plan displayed.
+No doctor displayed.
+[INFO] Cleared input for next search
+

@@ -1,0 +1,38 @@
+🟢 Welcome message: Welcome, Julia Donaldson
+🟢 Member ID: Member ID: 850497953
+🟢 Profile name is valid: Julia Donaldson
+🟢 DOB is valid: 12-31-1990
+🟢 Email is valid: brucewaynetest123+julia@gmail.com
+🟢 Gender is valid: Female
+🟢 Address is valid: PO BOX 7, SKIPPACK, PA 19474, US
+[INFO] Filter applied: Last 60 Months
+[WARN] No filters selected — skipped Apply
+No physician
+No physician
+No test names
+No test names
+No test names
+No test names found
+Calcium SerPl-sCnc
+ABNORMAL
+TEst2
+ABNORMAL
+Calcium SerPl-sCnc
+ABNORMAL
+TEst2
+ABNORMAL
+No test names found
+
+📅 Checking date range #1: January 1, 2024 → November 30, 2024
+✅ No abnormal test results found.
+✅ No normal/non-abnormal test results found.
+
+📅 Checking date range #2: January 1, 2024 → January 1, 2025
+✅ No abnormal test results found.
+✅ No normal/non-abnormal test results found.
+Running test for Physician: Scott Down, Date Range: Last 60 Months
+✅ Abnormal checkbox is checked: true
+✅ No abnormal test results for Scott Down in Last 60 Months.
+Checkbox status is: Unchecked
+✅ No UNABNORMAL test results for Scott Down in Last 60 Months.
+Running test for testnamesearch : Calcium SerPl-sCnc, Date Range: Last 3 Months

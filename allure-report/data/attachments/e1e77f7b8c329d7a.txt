@@ -1,0 +1,17 @@
+🟢 Welcome message: Welcome, Julia Donaldson
+🟢 Member ID: Member ID: 850497953
+🟢 Profile name is valid: Julia Donaldson
+🟢 DOB is valid: 12-31-1990
+🟢 Email is valid: brucewaynetest123+julia@gmail.com
+🟢 Gender is valid: Female
+🟢 Address is valid: PO BOX 7, SKIPPACK, PA 19474, US
+No claims displayed
+Physician Name Found: Scott Down
+✅ Found Lab Result: Precision Labs
+🔍 Clicked on "Last 36 Months" button.
+🔍 Selected "Last 3 Months" option.
+🔍 Expected Date Range: from 02-03-2025 to 05-03-2025
+✅ Date range successfully validated.
+✅ "No Lab Results to Show" is visible.
+object false
+❌ No provider displayed under the selected category.
