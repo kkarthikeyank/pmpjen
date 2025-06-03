@@ -36,6 +36,9 @@ export class ClaimsPage {
 
     //button[@id='applyFilterClaims']
     this.doneButton = page.getByRole('button', { name: 'Done' });
+    this.showresultsButton = page.locator("//button[@id='showResultsButton']"); // Button to show results after applying filters
+        this.resultsDropdown = page.locator('#pagination select'); // Example for dropdown
+
 
     this.viewDetailsButton = page.locator("//button[@tabindex='0' and text()=' View Details ']"); // Button to open claim details
     this.totalclaimbill = page.locator("total_claim_charge_billedtext");
@@ -217,192 +220,141 @@ async uncheckFilters(filters) {
 
 
 
+  //  scenario Filter by date range and print claims
 
-//    async filterByDateRange(dateRange) {
-//   await this.dateFilterButton.click();
-//   await this.page.getByText(dateRange).click();
-//   await this.doneButton.click();
-//   await this.filterResultsButton.waitFor({ state: 'visible', timeout: 30000 });
-//   await this.filterResultsButton.click();
-//   // console.log(`[INFO] Filter applied: ${dateRange}`);
-// }
 
-// async _checkCheckboxByLabel(labelText) {
-//   const checkboxXPath = `//div[contains(@class, 'form-check')]//div[contains(text(), "${labelText}")]/preceding-sibling::div//input[@type='checkbox']`;
-//   try {
-//     const checkbox = await this.page.waitForSelector(`xpath=${checkboxXPath}`, { timeout: 5000 });
-//     const isChecked = await checkbox.isChecked();
-//     if (!isChecked) {
-//       await checkbox.check();
-//       console.log(`[INFO] Checked: ${labelText}`);
-//     } else {
-//       console.log(`[INFO] Already checked: ${labelText}`);
+//   async filterAndPrintClaims(filter) {
+//     const { label, filterId, resultsSelectOption } = filter;
+
+//     console.log(`Filtering by: ${label}`);
+//     await this.page.locator('text=Loading...').waitFor({ state: 'detached', timeout: 10000 });
+
+//     await this.dateFilterButton.waitFor({ state: 'visible', timeout: 10000 });
+//     await this.dateFilterButton.click();
+
+//     const radioLocator = this.page.locator(`//input[@id='${filterId}']`);
+//     await radioLocator.waitFor({ state: 'visible', timeout: 5000 });
+//     await radioLocator.check();
+
+//     await this.doneButton.click();
+
+//     if (await this.showresultsButton.isVisible()) {
+//         await this.showresultsButton.scrollIntoViewIfNeeded();
+
+//     const res=  await this.showresultsButton.click();
+//       console.log(`Show Results button clicked for filter: ${res}`);
 //     }
-//     return true;
-//   } catch {
-//     console.log(`[WARN] Not found: ${labelText}`);
-//     return false;
+
+//     if (resultsSelectOption) {
+//   try {
+//     await this.page.waitForFunction(
+//       (sel) => {
+//         const el = document.querySelector(sel);
+//         return el && !el.disabled;
+//       },
+//       '#pagination select',
+//       { timeout: 10000 }
+//     );
+//      const selected = await this.resultsDropdown.selectOption(resultsSelectOption);
+//     console.log(`✅ Results dropdown selection applied. Selected value: ${selected}`);
+
+//   } catch (e) {
+//     console.warn(`Dropdown not enabled for filter "${label}". Skipping selectOption and continuing...`);
 //   }
 // }
 
-// async applyFilters(filters) {
-//   let anyApplied = false;
 
-//   for (const group of ['providers', 'payees', 'diagnoses']) {
-//     if (filters[group]?.length > 0) {
-//       for (const item of filters[group]) {
-//         const result = await this._checkCheckboxByLabel(item);
-//         if (result) anyApplied = true;
+//     await this.page.waitForTimeout(3000);
+
+//     const claims = await this.claimNumberLocator.all();
+//     if (claims.length === 0) {
+//       console.log(`No claims found for ${label}`);
+//     } else {
+//       console.log(`Claims found for ${label}:`);
+//       for (const claim of claims) {
+//         const text = await claim.textContent();
+//         console.log(`Claim Number: ${text?.trim()}`);
 //       }
 //     }
 //   }
 
-//   if (anyApplied) {
-//     await this.applyFiltersButton.click();
-//     await this.page.waitForTimeout(1000); // Wait for results to render
-//     console.log('[INFO] Filters applied');
-//   } else {
-//     console.log('[WARN] No filters selected — skipping apply');
-//   }
+  async filterAndPrintClaimsByLabel(label, resultsSelectOption = null) {
+  const cleanLabel = label.trim();
 
-//   await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-//   console.log('[INFO] Page scrolled to bottom');
+  console.log(`Filtering by: ${cleanLabel}`);
 
-//   await this.filterResultsButton.waitFor({ state: 'visible' });
-//   await this.page.waitForTimeout(1000);
-//   await this.filterResultsButton.click();
-// }
+  // Wait for loading spinner to disappear
+  await this.page.locator('text=Loading...').waitFor({ state: 'detached', timeout: 10000 });
 
-// async printResults() {
-//   const providerCount = await this.providerResults.count();
-//   if (providerCount === 0) {
-//     console.log('[INFO] No providers found');
-//   } else {
-//     for (let i = 0; i < providerCount; i++) {
-//       const name = await this.providerResults.nth(i).innerText();
-//       console.log(`[PROVIDER ${i + 1}]: ${name}`);
-//     }
-//   }
+  // Open date filter popup/dropdown
+  await this.dateFilterButton.waitFor({ state: 'visible', timeout: 10000 });
+  await this.dateFilterButton.click();
 
-//   const payeeCount = await this.payeeResults.count();
-//   if (payeeCount === 0) {
-//     console.log('[INFO] No payees found');
-//   } else {
-//     for (let i = 0; i < payeeCount; i++) {
-//       const name = await this.payeeResults.nth(i).innerText();
-//       console.log(`[PAYEE ${i + 1}]: ${name}`);
-//     }
-//   }
-// }
+  // Dynamically find the <label> element containing the filter label text
+  const labelLocator = this.page.locator(`label:has-text("${cleanLabel}")`);
+  await labelLocator.waitFor({ state: 'visible', timeout: 5000 });
 
-// async uncheckFilters(filters) {
-//   const tryUncheck = async (label, name) => {
-//     const checkboxXPath = `//div[contains(@class, 'form-check')]//div[contains(text(), "${name}")]/preceding-sibling::div//input[@type='checkbox']`;
-//     const checkboxLocator = this.page.locator(`xpath=${checkboxXPath}`);
+  // Get the 'for' attribute value, which is the id of the related input
+  const filterId = await labelLocator.getAttribute('for');
+  if (!filterId) {
+    console.log(`❌ Could not find filter input associated with label: ${cleanLabel}`);
+    return;
+  }
 
-//     const isVisible = await checkboxLocator.isVisible().catch(() => false);
-//     if (!isVisible) {
-//       console.warn(`[WARN] ${label} not found: ${name}`);
-//       return;
-//     }
+  // Find the input radio by id and check it
+  const radioLocator = this.page.locator(`input#${filterId}`);
+  await radioLocator.waitFor({ state: 'visible', timeout: 5000 });
+  await radioLocator.check();
 
-//     const isChecked = await checkboxLocator.isChecked();
-//     if (isChecked) {
-//       await checkboxLocator.uncheck();
-//       console.log(`[INFO] Unchecked ${label}: ${name}`);
-//     } else {
-//       console.log(`[DEBUG] ${label} not checked: ${name}`);
-//     }
-//   };
+  // Confirm filter selection
+  await this.doneButton.click();
 
-//   for (const name of filters.providers || []) {
-//     await tryUncheck('provider', name);
-//   }
+  // If "Show Results" button is visible, click it
+  if (await this.showresultsButton.isVisible()) {
+    await this.showresultsButton.scrollIntoViewIfNeeded();
+    await this.showresultsButton.click();
+    console.log(`Show Results button clicked for filter: ${cleanLabel}`);
+  }
 
-//   for (const name of filters.payees || []) {
-//     await tryUncheck('payee', name);
-//   }
-
-//   for (const name of filters.diagnoses || []) {
-//     await tryUncheck('diagnosis', name);
-//   }
-
-//   await this.applyFiltersButton.click();
-//   console.log('[INFO] Unchecked filters applied');
-//   await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-//   console.log('[INFO] Page scrolled to bottom');
-// }
-
-
-  
-
-
-
-  
-
-
-  //  scenario Filter by date range and print claims
-
-  async filterAndPrintClaimsByLabel(label) {
-    const dateFilters = {
-      '3 Months': 'LAST_3_MONTHSradio',
-      '6 Months': 'LAST_6_MONTHSradio',
-      '60 Months': 'LAST_60_MONTHSradio',
-    };
-
-    const filterId = dateFilters[label];
-    if (!filterId) {
-      console.log(`Invalid filter label: ${label}`);
-      return;
+  // If resultsSelectOption is provided, select it in dropdown if enabled
+  if (resultsSelectOption) {
+    try {
+      await this.page.waitForFunction(
+        (sel) => {
+          const el = document.querySelector(sel);
+          return el && !el.disabled;
+        },
+        '#pagination select',
+        { timeout: 10000 }
+      );
+      const selected = await this.resultsDropdown.selectOption(resultsSelectOption);
+      console.log(`✅ Results dropdown selection applied. Selected value: ${selected}`);
+    } catch (e) {
+      console.warn(`Dropdown not enabled for filter "${cleanLabel}". Skipping selectOption and continuing...`);
     }
+  }
 
-    console.log(`Filtering by: ${label}`);
-    await this.page.locator('text=Loading...').waitFor({ state: 'detached', timeout: 10000 });
+  // Wait for results to load (better to replace with smart wait if possible)
+  await this.page.waitForTimeout(3000);
 
-    await this.dateFilterButton.waitFor({ state: 'visible', timeout: 10000 });
-    await this.dateFilterButton.click();
-
-    const radioLocator = this.page.locator(`//input[@id='${filterId}']`);
-    await radioLocator.waitFor({ state: 'visible', timeout: 5000 });
-    await radioLocator.check();
-
-    await this.doneButton.click();
-
-    await this.page.waitForTimeout(3000); // Replace with smarter wait if needed
-
-    const claims = await this.claimNumberLocator.all();
-    if (claims.length === 0) {
-      console.log("No claims found");
-    } else {
-      console.log(`Claims found for ${label}:`);
-      for (const claim of claims) {
-        const text = await claim.textContent();
-        console.log(`Claim Number: ${text?.trim()}`);
-      }
+  // Fetch all claims found
+  const claims = await this.claimNumberLocator.all();
+  if (claims.length === 0) {
+    console.log(`No claims found for ${cleanLabel}`);
+  } else {
+    console.log(`Claims found for ${cleanLabel}:`);
+    for (const claim of claims) {
+      const text = await claim.textContent();
+      console.log(`Claim Number: ${text?.trim()}`);
     }
+  }
+}
 
-
-  }  
-
-  
 
   // senario  search by claim number with date range filter 
 
-  async searchclaimnumber(label, claimNumber) {
-
-    const dateFilters = {
-      '3 Months': 'LAST_3_MONTHSradio',
-      '6 Months': 'LAST_6_MONTHSradio',
-      '60 Months': 'LAST_60_MONTHSradio',
-    };
-
+  async searchClaimNumber(label, claimNumber) {
     const cleanLabel = label.trim();
-    const filterId = dateFilters[cleanLabel];
-
-    if (!filterId) {
-      console.log(`❌ Invalid filter label: ${label}`);
-      return;
-    }
 
     console.log(`→ Filtering by: ${cleanLabel}`);
 
@@ -411,7 +363,17 @@ async uncheckFilters(filters) {
     await this.dateFilterButton.waitFor({ state: 'visible', timeout: 10000 });
     await this.dateFilterButton.click();
 
-    const radioLocator = this.page.locator(`//input[@id='${filterId}']`);
+    // Dynamically find filter radio input by label text
+    const labelLocator = this.page.locator(`label:has-text("${cleanLabel}")`);
+    await labelLocator.waitFor({ state: 'visible', timeout: 5000 });
+
+    const filterId = await labelLocator.getAttribute('for');
+    if (!filterId) {
+      console.log(`❌ Could not find filter input associated with label: ${cleanLabel}`);
+      return;
+    }
+
+    const radioLocator = this.page.locator(`input#${filterId}`);
     await radioLocator.waitFor({ state: 'visible', timeout: 5000 });
     await radioLocator.check();
 
@@ -439,8 +401,13 @@ async uncheckFilters(filters) {
     }
 
     await this.clearButton.click();
-
   }
+
+
+
+  // async searchclaimnumber(label, claimNumber) {
+
+
 
   // scenario  Filter by custom date range and print claims
 
@@ -509,85 +476,7 @@ async uncheckFilters(filters) {
   }
 
 
-//   async filterByCustomDateRangeAndPrintClaims(fromDate, toDate) {
-//     console.log(`→ Applying custom date range: ${fromDate} to ${toDate}`);
 
-//     await this.dateFilterButton.waitFor({ state: 'visible', timeout: 50000 });
-//     await this.dateFilterButton.click();
-//     await this.fromDateInput.fill(fromDate);
-//     await this.toDateInput.fill(toDate);
-//     await this.doneButton.click();
-
-//     await this.monthsdateverify.waitFor({ state: 'visible', timeout: 50000 });
-
-//     const dateText = await this.monthsdateverify.textContent();
-//     if (dateText?.trim()) {
-//       console.log(`✅ Date filter applied: ${dateText.trim()}`);
-//     }
-
-//     const claims = await this.claimNumberLocator.all();
-//     if (claims.length === 0) {
-//       console.log(`❌ No claims found for range ${fromDate} to ${toDate}`);
-//     } else {
-//       console.log(`✅ Claims found for range ${fromDate} to ${toDate}:`);
-
-//       for (let i = 0; i < claims.length; i++) {
-//   const claim = claims[i];
-//   const count = await this.page.locator('//p[@data-id="claimsCardClaimNumber"]').count();
-//   console.log(`→ Number of claim elements: ${count}`);
-
-// }
-
-//       // for (let i = 0; i < claims.length; i++) {
-//       //   const claim = claims[i];
-//       //   // const text = await claim.textContent();
-//       //   // console.log(`→ Claim Number: ${text?.trim()}`);
-
-//       //   const count = await this.page.locator('//p[@data-id="claimsCardClaimNumber"]').count();
-//       //   console.log(`→ Number of claim elements: ${count}`);
-
-//       //   await this.openClaimAndReturn(i + 1);
-//       // }
-//     }
-//   }
-
-//  async openClaimAndReturn(claimIndex) {
-//   if (claimIndex <= 0) {
-//     console.log(`❌ No claims available to open.`);
-//     return;
-//   }
-
-//   console.log(`→ Opening claim ${claimIndex}...`);
-
-//   const claimDetailButton = this.viewDetailsButton.nth(claimIndex - 1);
-
-//   // await claimDetailButton.scrollIntoViewIfNeeded();
-//   await claimDetailButton.waitFor({ state: 'visible', timeout: 10000 });
-//   await claimDetailButton.click();
-
-//   // Wait for navigation or content update
-//   try {
-//     await this.page.waitForSelector('text=Claim Details', { timeout: 30000 });
-//     console.log(`✅ Claim ${claimIndex} details page opened.`);
-//   } catch (e) {
-//     console.error(`❌ Timed out waiting for Claim ${claimIndex} details to load.`);
-//     return;
-//   }
-
-//   await this.returnButton.waitFor({ state: 'visible', timeout: 30000 });
-//   await this.returnButton.click();
-//   console.log(`↩️ Returned to previous page after Claim ${claimIndex}.`);
-
-//   // Optional: Ensure return completes before clicking clear
-//   await this.page.waitForLoadState('networkidle');
-//   await this.clearButton.waitFor({ state: 'visible', timeout: 10000 });
-//   await this.clearButton.click();
-// }
-
-
-  // async waitForContentToLoad() { work
-  //   await this.page.waitForSelector('#openSummaryPrintTopBtn');
-  // }
 
   // // Optionally click the button (only if needed for layout/view changes, not real print)
   // async triggerPrintViewIfNeeded() {

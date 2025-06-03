@@ -214,37 +214,42 @@
 // import { LoginPage } from '../../pages/LoginPage.js';
  
 
-
 import data from '../../data/testData.json' assert { type: 'json' };
-// import { Before, After, Given, When, Then } from '@cucumber/cucumber';
-import { BeforeAll, AfterAll, Before, After, Given, When, Then } from '@cucumber/cucumber';
-
-
-import { expect } from '@playwright/test';
+import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber';
+import { expect } from '@playwright/test';   // <-- add this import
 import { LoginPage } from '../../src/pages/LoginPage.js';
 import { ClaimsPage } from '../../src/pages/ClaimsPage.js';
 
+setDefaultTimeout(70000);
 
-let browser;
-let context;
 let page;
+let login;
+let claimsPage;
 
-BeforeAll(async function () {
-  browser = await chromium.launch();
-  context = await browser.newContext();
-  page = await context.newPage();
+Given('I am logged in with valid credentials', async function () {
+  page = this.page;  // cucumber-playwright injects page context
+  login = new LoginPage(page);
+  claimsPage = new ClaimsPage(page);
 
-  const login = new LoginPage(page);
   await login.gotoLoginPage();
   await login.login(data.user, data.password);
+
+  await page.waitForURL('**/member-portal/**', { timeout: 180000 });
 });
 
-
-// Setup page objects before each scenario
-Before(async function () {
-  this.page = page;
-  this.claims = new ClaimsPage(page);
+When('I open the claims tab', async function () {
+  await claimsPage.openClaimsTab();
 });
+
+When('I filter claims by {string}', async function (filterLabel) {
+  const filter = data.claimsDateFilter.find(f => f.label === filterLabel);
+  if (!filter) {
+    throw new Error(`Filter label "${filterLabel}" not found in test data`);
+  }
+  await claimsPage.filterAndPrintClaims(filter);
+});
+
+ 
 
 
 // Before(async function () {
@@ -269,28 +274,28 @@ Before(async function () {
 // //   await this.browser.close();
 // // });
 
-Given('I am logged in', async function () {
-  // Already logged in in Before hook
-});
+// Given('I am logged in', async function () {
+//   // Already logged in in Before hook
+// });
 
-When('I open the claims tab', async function () {
-  // await this.claims.openClaimsTab();
-  await this.claims.openClaimsTab();
+// When('I open the claims tab', async function () {
+//   // await this.claims.openClaimsTab();
+//   await this.claims.openClaimsTab();
 
-});
+// });
 
-When('I filter claims by {string}', async function (label) {
-  await this.claims.filterAndPrintClaimsByLabel(label);
-});
+// When('I filter claims by {string}', async function (label) {
+//   await this.claims.filterAndPrintClaimsByLabel(label);
+// });
 
-Then('I see claims printed for {string}', async function (label) {
-  // optional assertions or leave blank
-});
-AfterAll(async function () {
-  await page.close();
-  await context.close();
-  await browser.close();
-});
+// Then('I see claims printed for {string}', async function (label) {
+//   // optional assertions or leave blank
+// });
+// AfterAll(async function () {
+//   await page.close();
+//   await context.close();
+//   await browser.close();
+// });
 
 // let login;
 // let claims;

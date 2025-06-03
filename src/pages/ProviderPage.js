@@ -11,11 +11,13 @@ export class ProviderPage {
     this.providerTap = page.locator('#navLink-PROVIDERS');
     this.firstdoctortype = page.getByText('Doctor\'s Type');
 
-
         this.doctorsType = page.locator(`//div[normalize-space(text())="Doctor's Type"]`);
         this.firstdoctorname = page.getByText('Doctor\'s Name');
 
         this.doctorName = page.locator(`//div[normalize-space(text())="Doctor's Name"]`);
+
+            this.firsthealthfacilities = page.getByText(' Health Facilities ');
+        this.healthFacilities = page.locator(`//div[normalize-space(text())="Health Facilities"]`);
 
         this.doctorTypeTextbox = page.getByRole('textbox', { name: 'Enter a type of doctor or a' });
         this.doctorNameResults = page.locator("//span[contains(@class, 'provider-card-name')]");
@@ -26,7 +28,10 @@ export class ProviderPage {
         this.clearButton = page.getByText('Clear');
         this.zipCodeTextbox = page.getByRole('textbox', { name: 'ZIP Code' });
         this.doctorNameTextbox = page.getByRole('textbox', { name: "Enter a doctor's name" });
+        this.healthFacilitiesTextbox = page.locator("//input[@id='providersFilterKeyWordSearchInput']");
         this.openplandropdown =page.locator("//button[@id='dropdownPlanFilterButton']")
+                this.healthNameResults = page.locator("//span[contains(@class, 'provider-card-name')]");
+
         this.kidzPartnersButton = page.locator("//li[normalize-space()='KidzPartners']");
         this.healthPartnersButton = page.locator("//li[normalize-space()='Health Partners']");
          this.healthpartnersMedicare =page.locator("//li[normalize-space()='Health Partners Medicare']");
@@ -236,8 +241,104 @@ async printDistancedoctornameIfExists() {
     }
   }
 
+ // scenario : search for health facilities  name with keyword and plan and distance
 
 
+  
+  async clickhealthfacilities() {
+
+     await this.firsthealthfacilities.click();
+  }
+  async selecthealthFacilities() {
+ await this.healthFacilities.waitFor({ state: 'visible', timeout: 10000 });
+
+  await this.healthFacilities.click();
+
+}
+
+  async searchByHealthfacilities(name) {
+    await this.healthFacilitiesTextbox.fill(name);
+
+  }
+   async selecthealthfacilitiesDoctorPlan(planName) {
+  await this.openplandropdown.click();
+ const planOption = this.page.locator(`//li[normalize-space(.)='${planName}']`);
+ await planOption.waitFor({ state: 'visible', timeout: 10000 });
+
+  await planOption.click();
+   console.log(`[INFO] Selected plan: ${planName}`);
+
+
+}
+
+
+async selectDistancedoctornamehealth(distance) {
+  console .log(`[INFO] Selected distance: ${distance}`);
+    const trimmedDistance = distance.trim();
+
+    // Click the dropdown to open options
+    await this.distancedropdown.click();
+
+    // Optional short wait if dropdown takes time to render
+    await this.page.waitForTimeout(500);
+
+    // Locator for the matching option using dynamic XPath
+    const optionLocator = this.page.locator(`//li[normalize-space()='${trimmedDistance}']`);
+
+    // Wait for the option to be visible
+    await optionLocator.waitFor({ state: 'visible', timeout: 5000 });
+
+    // Click the option
+    await optionLocator.click();
+  }
+
+// async printDistancedoctornameIfExists() {
+//     const isVisible = await this.distancemile.isVisible();
+//     if (isVisible) {
+//       const text = await this.distancemile.textContent();
+//       console.log(`distance for provider: ${text}`);
+//     } else {
+//       console.log("No provider displayed.");
+//     }
+//   }
+async printDistancehealthIfExists() {
+  try {
+    await this.distancemile.waitFor({ state: 'visible', timeout: 5000 });
+    const text = await this.distancemile.textContent();
+    console.log(`distance for provider: ${text}`);
+  } catch (e) {
+    console.log("No provider displayed.");
+  }
+}
+
+
+
+  async printdochealthNameResultstorNameIfExists() {
+    const nameLocators = this.page.locator("//span[contains(@class, 'provider-card-name')]");
+  const count = await nameLocators.count();
+
+  if (count === 0) {
+    console.log("No providers found.");
+    return;
+  }
+
+  for (let i = 0; i < count; i++) {
+    const text = await nameLocators.nth(i).textContent();
+    console.log(`Provider ${i + 1}: ${text.trim()}`);
+  }
+  }
+
+async printhealthfacilitesIfExists() {
+  const locator = this.page.locator("//p[@aria-label='Plan']/following-sibling::p[1]").first();
+  const isVisible = await locator.isVisible();
+  
+  if (isVisible) {
+    const text = await locator.textContent();
+    console.log(`Plan: ${text}`);
+  } else {
+    console.log("No plan displayed.");
+  }
+}
 
 
 async logout() {

@@ -5,8 +5,8 @@ import { expect } from '@playwright/test';
 export class DashboardPage {
   constructor(page) {
     this.page = page;
-    this.welcomeLocator = page.locator('//span[@id="dashHeader"]');
-        // this.welcomeLocator = page.getByRole('heading', { name: 'Welcome, Julia Donaldson' }); // ✅ updated locator
+    // this.welcomeLocator = page.locator('//span[@id="dashHeader"]');
+        this.welcomeLocator = page.getByRole('heading', { name: 'Welcome, Julia Donaldson' }); // ✅ updated locator
 
     this.memberIdLocator = page.locator("//div[@data-id='benefitsCardMemberId']");
   }

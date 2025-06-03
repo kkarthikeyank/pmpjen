@@ -176,9 +176,14 @@ async logLabResults(name, rangeText) {
   async searchTestName(name) {
     await this.testnamesearchBox.click();
     await this.testnamesearchBox.fill(name);
-    await this.applyButton.click();
+   
+   
   }
-
+async selectNumberOfResults(count) {
+ const drop= await this.page.getByLabel('select number of results').selectOption(count.toString());
+  console.log("object==============================================================================================",drop)
+   await this.applyButton.click();
+}
 async printTestResults(searchedName, rangeText) {
   console.log(`\n--- Filter Selection ---`);
   console.log(`Date Range: ${rangeText}`);
@@ -209,7 +214,11 @@ async printTestResults(searchedName, rangeText) {
 
   
    async clearFilters() {
+    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  console.log('[INFO] Page scrolled to bottom');
+
     await this.clearButton.click();
+   
   }
 
 //  scenario custom date range status abnormal and unabnormal with checkbox
@@ -289,34 +298,6 @@ async uncheckAbnormalFilter() {
 }
 
 
-// Print abnormal test names
-// async printAbnormalTestNames() {
-//   const count = await this.testNameLocators.count();
-//   let found = false;
-
-//   for (let i = 0; i < count; i++) {
-//     const row = this.testNameLocators.nth(i);
-//     const spans = row.locator('span');
-//     const spanCount = await spans.count();
-
-//     let textParts = [];
-//     for (let j = 0; j < spanCount; j++) {
-//       const part = await spans.nth(j).innerText();
-//       textParts.push(part.trim());
-//     }
-
-//     const rowText = textParts.join(' ');
-//     if (rowText.includes('ABNORMAL')) {
-//       console.log(`  - ${rowText}`);
-//       found = true;
-//     }
-//   }
-
-//   if (!found) {
-//     console.log('✅ No abnormal test results found.');
-//   }
-// }
-
 
 
 async printAbnormalTestNames() {
@@ -362,33 +343,6 @@ async printNonAbnormalTestNames() {
     testNames.forEach((name, idx) => console.log(`  ${idx + 1}. ${name}`));
   }
 }
-
-// async printNonAbnormalTestNames() {
-//   const count = await this.testNameLocators.count();
-//   let found = false;
-
-//   for (let i = 0; i < count; i++) {
-//     const row = this.testNameLocators.nth(i);
-//     const spans = row.locator('span');
-//     const spanCount = await spans.count();
-
-//     let textParts = [];
-//     for (let j = 0; j < spanCount; j++) {
-//       const part = await spans.nth(j).innerText();
-//       textParts.push(part.trim());
-//     }
-
-//     const rowText = textParts.join(' ');
-//     if (!rowText.includes('ABNORMAL')) {
-//       console.log(`  - ${rowText}`);
-//       found = true;
-//     }
-//   }
-
-//   if (!found) {
-//     console.log('✅ No normal/non-abnormal test results found.');
-//   }
-// }
 
 
 

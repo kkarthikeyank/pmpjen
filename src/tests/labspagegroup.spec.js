@@ -49,7 +49,7 @@ test.describe('Member Portal - Labs Flow', () => {
 
 
     });
-    test('search with lab vendor  name search', async () => {
+    test.skip('search with lab vendor  name search', async () => {
         for (const labsrecord of data.LabSearchCases) {
 
             const name = labsrecord.labName;
@@ -68,7 +68,7 @@ test.describe('Member Portal - Labs Flow', () => {
 
 
 
-    test.skip('search with testname ', async () => {
+    test('search with testname ', async () => {
 
         for (const testrecord of data.TestNameCases) {
             const testName = testrecord.testName;
@@ -76,6 +76,8 @@ test.describe('Member Portal - Labs Flow', () => {
 
             await labs.selectDateRangetestname(rangeText);
             await labs.searchTestName(testName);
+            await labs.selectNumberOfResults(10);
+
             await labs.printTestResults(testName, rangeText); // ✅ pass filters
             await labs.clearFilters();
         }

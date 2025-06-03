@@ -2,13 +2,19 @@
   "user": "Julia",
   "password": "Batman123",
   "claimsDateFilter": [
-    {
-      "label": "3 Months"
-    },
-    {
-      "label": "60 Months"
-    }
-  ],
+  {
+    "label": "3 Months",
+      "resultsSelectOption": "50"
+
+  },
+  {
+    "label": "60 Months", 
+     "resultsSelectOption": "50"
+
+  }
+],
+
+  
   "claimsNumberSearch": [
     {
       "label": "60 Months",
@@ -66,15 +72,21 @@
   "TestNameCases": [
     {
       "dateRange": "Last 60 Months",
-      "testName": "Laboratory"
+      "testName": "Laboratory",
+      "showresultsdropdown": "10"
+
     },
     {
       "dateRange": "Last 60 Months",
-      "testName": "Calcium SerPl-sCnc"
+      "testName": "Calcium SerPl-sCnc",
+      "showresultsdropdown": "10"
+
     },
     {
       "dateRange": "Last 60 Months",
-      "testName": "TEst2"
+      "testName": "TEst2",
+      "showresultsdropdown": "10"
+
     }
   ],
   "labsCustomDateRange": [
@@ -160,7 +172,7 @@
   "DoctorNameSearch": [
     {
       "doctorNameTextbox": {
-        "keywordSearch": "Aaron Dorfman"
+        "keywordSearch": "tgw"
       },
       "planOptions": {
         "selected": "Health Partners",
@@ -179,6 +191,34 @@
           "within 100 miles",
           "More than 100 miles"
         ]
+        
+      }
+    }
+  ],  
+
+  "healthfacilitiesSearch": [
+    {
+      "healthNameTextbox": {
+        "keywordSearch": "Howard's Hospital"
+      },
+      "planOptions": {
+        "selected": "Health Partners",
+        "options": [
+          "KidzPartners",
+          "Health Partners Medicare",
+          "Health Partners"
+        ]
+      },
+      "distance": {
+        "choosemiles": " More than 100 miles",
+        "options": [
+          "within 10 miles",
+          "within 20 miles",
+          "within 50 miles",
+          "within 100 miles",
+          "More than 100 miles"
+        ]
+        
       }
     }
   ]

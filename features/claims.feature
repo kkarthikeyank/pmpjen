@@ -71,20 +71,20 @@
   #     | 6 Months   |
   #     | 60 Months  |
 
-Feature: Claims filtering by date range
+# Feature: Claims filtering by date range
 
-  # Background:
-  #   Given I am logged in
+#   # Background:
+#   #   Given I am logged in
 
-  Scenario Outline: Filter claims by date range and print claims
-    When I open the claims tab
-    And I filter claims by "<label>"
-    Then I see claims printed for "<label>"
+#   Scenario Outline: Filter claims by date range and print claims
+#     When I open the claims tab
+#     And I filter claims by "<label>"
+#     Then I see claims printed for "<label>"
 
-    Examples:
-      | label    |
-      | 3 Months |
-      | 6 Months |
+#     Examples:
+#       | label    |
+#       | 3 Months |
+#       | 6 Months |
       # | 60 Months|
 # I see claims printed for "<label>"
 # Feature: Claims filtering
@@ -105,3 +105,20 @@ Feature: Claims filtering by date range
 #       | 3 Months |
 #       | 6 Months |
 #       | 60 Months|
+
+Feature: Claims filtering in member portal
+
+  Background:
+    Given I am logged in with valid credentials
+
+  Scenario Outline: Open claims tab and filter claims by date
+    When I open the claims tab
+    And I filter claims by "<filterLabel>"
+
+    Examples:
+      | filterLabel |
+      | 3 Months    |
+      | 60 Months   |
+
+
+

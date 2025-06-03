@@ -94,18 +94,24 @@ test('Login with valid credentials', async ({ page }) => {
 
   await claims.openClaimsTab();
 
+  // scenario Filter by claim number and print claims
+
+  
+  // for (const filter of data.claimsDateFilter) {
+  //   await claims.filterAndPrintClaims(filter);
+  // }
+
+for (const filter of data.claimsDateFilter) {
+  await claims.filterAndPrintClaimsByLabel(filter.label, filter.resultsSelectOption);
+}
 
 
-  // // scenario Filter by date range and print claims
-  for (const filter of data.claimsDateFilter) {
-    await claims.filterAndPrintClaimsByLabel(filter.label);
-  }
+//   for (const { label, claimNumber } of data.claimsNumberSearch) {
+//   await claims.searchclaimnumber(label, claimNumber);
+// }
 
-
-
-  // // scenario Filter by claim number and print claims
   for (const { label, claimNumber } of data.claimsNumberSearch) {
-    await claims.searchclaimnumber(label, claimNumber);
+    await claims.searchClaimNumber(label, claimNumber);
   }
 
 
@@ -208,9 +214,14 @@ test('Login with valid credentials', async ({ page }) => {
   for (const testrecord of data.TestNameCases) {
     const testName = testrecord.testName;
     const rangeText = testrecord.dateRange;
+    const showresultsdropdown = testrecord.showresultsdropdown;
+
 
     await labs.selectDateRangetestname(rangeText);
     await labs.searchTestName(testName);
+    // await labs.selectNumberOfResults(10);
+      await labs.selectNumberOfResults(showresultsdropdown); // now dynamic from JSON
+
     await labs.printTestResults(testName, rangeText); // ✅ pass filters
     await labs.clearFilters();
   }
@@ -353,7 +364,29 @@ test('Login with valid credentials', async ({ page }) => {
     console.log(`[INFO] Cleared input for next search\n`);
   }
 
+   // scenario : search for health facilities  name with keyword and plan and distance
 
+  for (const testCase of data.healthfacilitiesSearch) {
+    const name = testCase.healthNameTextbox.keywordSearch;
+    const selectedPlan = testCase.planOptions.selected;
+    const selectedDistance = testCase.distance.choosemiles;
+
+    console.log(`\n[INFO] Running test case with: Name="${name}", Plan="${selectedPlan}", Distance="${selectedDistance}"`);
+
+    await provider.clickhealthfacilities();
+    await provider.selecthealthFacilities();
+    await provider.searchByHealthfacilities(name);
+    await provider.selecthealthfacilitiesDoctorPlan(selectedPlan);
+    await provider.selectDistancedoctornamehealth(selectedDistance);
+
+    // await provider.printDistancehealthIfExists();
+    await provider.printdochealthNameResultstorNameIfExists();
+    await provider.printhealthfacilitesIfExists();
+
+    await provider.clearButton.click();
+    console.log(`[INFO] Cleared input for next search\n`);
+  }
+   
   await provider.logout();
 
   await expect(page).toHaveURL('https://hikepmp-dev.smilecdr.com/member-portal/#/login'); // Replace with the actual login URL
