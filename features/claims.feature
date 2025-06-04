@@ -111,14 +111,26 @@ Feature: Claims filtering in member portal
   Background:
     Given I am logged in with valid credentials
 
-  Scenario Outline: Open claims tab and filter claims by date
+ 
+
+
+  Scenario Outline: Filter and print claims using label and optional dropdown selection
     When I open the claims tab
-    And I filter claims by "<filterLabel>"
+    When I filter by label "<label>" and select "<resultsSelectOption>"
+    Then I should see the filtered claim results for "<label>"
 
     Examples:
-      | filterLabel |
-      | 3 Months    |
-      | 60 Months   |
+      | label          | resultsSelectOption |
+      |   60 Months     |      50             |
 
 
+  Scenario Outline: Search for claim by label and claim number
+      When I open the claims tab
 
+    When I search using "<label>" and "<claimNumber>"
+    Then I should see search results for "<claimNumber>"
+
+    Examples:
+      | label     | claimNumber  |
+      |  3 Months | CLM123456    |
+      | 60 Months |    144111    |

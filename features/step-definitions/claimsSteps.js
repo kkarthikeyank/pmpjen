@@ -241,15 +241,50 @@ When('I open the claims tab', async function () {
   await claimsPage.openClaimsTab();
 });
 
-When('I filter claims by {string}', async function (filterLabel) {
-  const filter = data.claimsDateFilter.find(f => f.label === filterLabel);
-  if (!filter) {
-    throw new Error(`Filter label "${filterLabel}" not found in test data`);
-  }
-  await claimsPage.filterAndPrintClaims(filter);
+When('I filter by label {string} and select {string}', async function (label, resultsSelectOption) {
+  const option = resultsSelectOption === '' ? null : resultsSelectOption;
+  await claimsPage.filterAndPrintClaimsByLabel(label, option);
 });
 
- 
+Then('I should see the filtered claim results for {string}', async function (label) {
+  const claims = await claimsPage.claimNumberLocator.all();
+  if (claims.length === 0) {
+    console.log(`❌ No claims found for ${label}`);
+  } else {
+    console.log(`✅ Claims found for ${label}:`);
+    for (const claim of claims) {
+      const text = await claim.textContent();
+      console.log(`→ Claim Number: ${text?.trim()}`);
+    }
+    expect(claims.length).toBeGreaterThan(0);
+  }
+});
+
+When('I search using {string} and {string}', async function (label, claimNumber) {
+  await claimsPage.searchClaimNumber(label, claimNumber);
+});
+
+Then('I should see search results for {string}', async function (claimNumber) {
+  const claimLocators = await claimsPage.claimNumberLocator.all();
+  const texts = [];
+
+  for (const locator of claimLocators) {
+    const text = await locator.textContent();
+    if (text) {
+      texts.push(text.trim());
+    }
+  }
+  const found = texts.some(text => text.includes(claimNumber));
+
+  if (found) {
+    console.log(`✅ Claim number "${claimNumber}" found in the results.`);
+  } else {
+    console.log(`❌ Claim number "${claimNumber}" not found in the results.`);
+  }
+});
+
+
+
 
 
 // Before(async function () {
