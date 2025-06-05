@@ -1,4 +1,0 @@
-Login URL: https://hikepmp-dev.smilecdr.com/member-portal/
-Username: karthi
-Password: Batman123
-Using login URL: https://hikepmp-dev.smilecdr.com/member-portal/

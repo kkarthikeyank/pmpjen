@@ -1,6 +1,0 @@
-Physician Name Found: Scott Down
-✅ Found Lab Result: Precision Labs
-🔍 Clicked on "Last 36 Months" button.
-🔍 Selected "Last 3 Months" option.
-🔍 Expected Date Range: from 01-23-2025 to 04-23-2025
-✅ Date range successfully validated.

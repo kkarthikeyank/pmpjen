@@ -1,5 +1,0 @@
-🟢 Welcome message: Welcome, Anna Queensister
-🟢 Member ID: Member ID: 850497966
-🟢 Found text: NAME Anna Queensister
-🟢 Found text: DATE OF BIRTH 12-28-1991
-🟢 Found text: testpr@mailinator.com

@@ -1,3 +1,0 @@
-Running test for labsvendor search  : Precision Labs, Date Range: Last 60 Months
-✅ Abnormal checkbox is checked: true
-❌ No test name found

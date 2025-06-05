@@ -1,2 +1,0 @@
-Running test for Physician: Scott Down, Date Range: Last 60 Months
-❌ No physician "Scott Down" found in Last 60 Months.

@@ -1,8 +1,0 @@
-🔴 Address assertion failed: expect.toBeVisible: Error: strict mode violation: locator('#addresstext') resolved to 2 elements:
-    1) <p id="addresstext" class="text-break" _ngcontent-oen-c212=""> PO BOX 7, SKIPPACK, PA 19474, US </p> aka getByText('PO BOX 7, SKIPPACK, PA 19474')
-    2) <p id="addresstext" class="text-break" _ngcontent-oen-c212=""> PO BOX 3, SKIPPACK, PA 19474, US </p> aka getByText('PO BOX 3, SKIPPACK, PA 19474')
-
-Call log:
-  - expect.toBeVisible with timeout 15000ms
-  - waiting for locator('#addresstext')
-

@@ -1,7 +1,0 @@
-[INFO] Selected plan: Health Partners
-[INFO] Selected distance:  More than 100 miles
-Plan:  Health Partners 
-doctor:  Aaron Dorfman 
-distance for provider:  100 mi 
-[INFO] Cleared input for next search
-

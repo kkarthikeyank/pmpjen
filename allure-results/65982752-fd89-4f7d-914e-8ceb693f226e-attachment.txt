@@ -1,8 +1,0 @@
-🟢 Welcome message: Welcome, Anna Queensister
-🟢 Member ID: Member ID: 850497966
-🟢 Profile name is valid: Anna Queensister
-🟢 DOB is valid: 12-28-1991
-🟢 Email is valid: testpr@mailinator.com
-🟢 Gender is valid: Female
-🟢 Address is valid: PO BOX 7, SKIPPACK, PA 19474, US
-[INFO] Filter applied: Last 60 Months

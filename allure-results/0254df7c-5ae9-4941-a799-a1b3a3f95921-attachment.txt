@@ -1,3 +1,0 @@
-[WARN] Checkbox not found for provider: "Nicole Koepke"
-[WARN] Checkbox not found for provider: "John Smith_provider"
-[WARN] Checkbox not found for provider: "Emily Chen_provider"

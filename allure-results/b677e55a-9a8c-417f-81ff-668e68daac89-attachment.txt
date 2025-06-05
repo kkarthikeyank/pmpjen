@@ -1,2 +1,0 @@
-[WARN] provider not found: Nicole Koepke
-[WARN] payee not found: Integra Partners Llc

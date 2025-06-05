@@ -1,4 +1,0 @@
-Login URL: https://hikepmp-dev.smilecdr.com/member-portal/
-Username: ANNA
-Password: test@123Example
-Using login URL: https://hikepmp-dev.smilecdr.com/member-portal/

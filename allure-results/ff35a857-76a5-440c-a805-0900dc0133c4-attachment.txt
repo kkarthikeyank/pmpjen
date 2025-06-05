@@ -1,3 +1,0 @@
-[WARN] provider not found: Nicole Koepke
-[WARN] payee not found: Integra Partners Llc
-[ERROR] FilterResultsButton could not be clicked — likely intercepted. Skipping: Last 60 Months

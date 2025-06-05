@@ -1,1 +1,0 @@
-[ERROR] FilterResultsButton could not be clicked — likely intercepted. Skipping: Last 60 Months

@@ -1,7 +1,0 @@
-Running test for labsvendor search  : Precision Labs, Date Range: Last 60 Months
-No physician names found.
-✅ No abnormal test results found.
-🟢 Non-abnormal test results found:
-  1. Laboratory
-Physician Names:
- Scott Down 

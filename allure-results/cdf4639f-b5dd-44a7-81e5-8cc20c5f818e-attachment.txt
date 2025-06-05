@@ -1,6 +1,0 @@
-Running test for Physician: Scott Down, Date Range: Last 60 Months
-✅ Abnormal checkbox is checked: true
-⚠️ Row 0: Test name span not visible.
-⚠️ Row 1: Test name span not visible.
-Checkbox status is: Unchecked
-✅ No UNABNORMAL test results for Scott Down in Last 60 Months.
