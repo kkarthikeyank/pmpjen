@@ -4,11 +4,10 @@
   "main": "index.js",
   "scripts": {
     "test": "cucumber-js --format json:reports/cucumber-report.json",
-      "test:claims": "cucumber-js features/claims.feature --require steps/claimsSteps.js --require support/world.js",
-
+    "test:claims": "cucumber-js features/claims.feature --require steps/claimsSteps.js --require support/world.js",
     "test:smoke": "cucumber-js --tags '@smoke'",
-
-    "report": "node generate-report.js"
+    "report": "node generate-report.js",
+    "clear-allure": "rimraf allure-report allure-results"
   },
   "type": "module",
   "keywords": [],
@@ -18,9 +17,10 @@
     "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.13.14",
-    "allure-playwright": "^3.2.1",
-    "cucumber-html-reporter": "^7.2.0",
-    "multiple-cucumber-html-reporter": "^3.9.2"
+    "allure-playwright": "^3.2.2",
+    "cucumber-html-reporter": "^6.0.0",
+    "multiple-cucumber-html-reporter": "^3.9.2",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
     "ansi-regex": "^4.1.1",
