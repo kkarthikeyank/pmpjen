@@ -2,7 +2,6 @@ import { expect } from '@playwright/test';
 
 // pages/ClaimsPage.js
 
-
 export class ClaimsPage {
   constructor(page) {
 
@@ -144,18 +143,25 @@ async applyFilters(filters) {
 
   if (anyApplied) {
     await this.applyFiltersButton.click();
-    await this.page.waitForTimeout(1000); // Wait for results to render
+    // await this.page.waitForTimeout(1000); // Wait for results to render
+          await this.page.waitForLoadState('networkidle');
+
     console.log('[INFO] Filters applied');
   } else {
     console.log('[WARN] No filters selected — skipping apply');
   }
 
+
   await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   console.log('[INFO] Page scrolled to bottom');
 
   await this.filterResultsButton.waitFor({ state: 'visible' });
-  await this.page.waitForTimeout(1000);
+  // await this.page.waitForTimeout(1000);
+      // await this.page.waitForLoadState('networkidle');
+
   await this.filterResultsButton.click();
+        await this.page.waitForLoadState('networkidle');
+
 }
 
 async printResults() {
@@ -335,7 +341,8 @@ async uncheckFilters(filters) {
   }
 
   // Wait for results to load (better to replace with smart wait if possible)
-  await this.page.waitForTimeout(3000);
+await this.page.waitForTimeout(3000);
+
 
   // Fetch all claims found
   const claims = await this.claimNumberLocator.all();
@@ -387,7 +394,8 @@ async uncheckFilters(filters) {
     await this.claimNumberInput.fill(claimNumber);
     await this.applyButton.click();
 
-    await this.page.waitForTimeout(3000);
+    // await this.page.waitForTimeout(3000);
+    await this.page.waitForLoadState('networkidle');
 
     const claims = await this.claimNumberLocator.all();
     if (claims.length === 0) {
@@ -444,6 +452,7 @@ async uncheckFilters(filters) {
     }
 
     // Clear filters after viewing all claims
+
     await this.clearButton.waitFor({ state: 'visible', timeout: 10000 });
     await this.clearButton.click();
     console.log(`🧹 Cleared filters after viewing all claims.`);

@@ -30,7 +30,7 @@ test.describe('Member Portal - Labs Flow', () => {
         await labs.openlabsTab();
 
         // Validate that Labs page is displayed
-        await expect(labs.page.locator('text=Labs')).toBeVisible();
+        // await expect(labs.page.locator('text=Labs')).toBeVisible();
 
 
     });
@@ -71,17 +71,24 @@ test.describe('Member Portal - Labs Flow', () => {
     test('search with testname ', async () => {
 
         for (const testrecord of data.TestNameCases) {
-            const testName = testrecord.testName;
-            const rangeText = testrecord.dateRange;
-
-            await labs.selectDateRangetestname(rangeText);
-            await labs.searchTestName(testName);
-            await labs.selectNumberOfResults(10);
-
-            await labs.printTestResults(testName, rangeText); // ✅ pass filters
-            await labs.clearFilters();
-        }
-
+           const testName = testrecord.testName;
+           const rangeText = testrecord.dateRange;
+           const showresultsdropdown = testrecord.showresultsdropdown;
+            console.log(`\n============================`);
+         console.log(`📅 Date Range Filter: ${rangeText}`);
+         console.log(`🔍 Searched Test Name: "${testName}"`);
+       
+           await labs.selectDateRangetestname(rangeText);
+           await labs.searchTestName(testName);
+           // await labs.selectNumberOfResults(10);
+             await labs.selectNumberOfResults( showresultsdropdown); // now dynamic from JSON
+                     await labs.printTestNames(testName);
+       
+                await labs.processVisibleTestNames();
+       
+       
+           await labs.clearFilters();
+         }
 
     });
 

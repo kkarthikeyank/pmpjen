@@ -58,20 +58,31 @@ export class ProviderPage {
 
    // Ensure the provider tab is visible before clicking
     await this.providerTap.waitFor({ state: 'visible', timeout: 20000 });
+await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
     await this.providerTap.click();
 }
 
 // scenario : search for doctor type with keyword and plan and distance
 async firstdoctortypeopen() {
+
+  await this.firstdoctortype.waitFor({ state: 'visible', timeout: 30000 });  // Wait for the element to be visible
+
+  // await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
     await this.firstdoctortype.click();
 }
 async selectDoctorType() {
-await this.page.waitForSelector('//div[normalize-space(text())="Doctor\'s Type"]', { state: 'visible', timeout: 20000 });
+// await this.page.waitForSelector('//div[normalize-space(text())="Doctor\'s Type"]', { state: 'visible' });
+
 await this.doctorsType.click();
+await this.page.waitForLoadState('networkidle', { timeout: 30000 });
 
 }
 
 async enterDoctorType(keyword) {
+  await this.page.waitForLoadState('networkidle', { timeout: 1000 });
+
     await this.doctorTypeTextbox.fill(keyword);
   }
 
@@ -85,6 +96,8 @@ async enterDoctorType(keyword) {
 
   async selectPlan(planName) {
   await this.openplandropdown.click();
+  await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
  const planOption = this.page.locator(`//li[normalize-space(.)='${planName}']`);
   await planOption.click();
 
@@ -98,7 +111,9 @@ async selectDistance(distance) {
     await this.distancedropdown.click();
 
     // Optional short wait if dropdown takes time to render
-    await this.page.waitForTimeout(500);
+    // await this.page.waitForTimeout(500);
+    await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
 
     // Locator for the matching option using dynamic XPath
     const optionLocator = this.page.locator(`//li[normalize-space()='${trimmedDistance}']`);
@@ -170,6 +185,8 @@ async printDistanceIfExists() {
   }
    async selectDoctorPlan(planName) {
   await this.openplandropdown.click();
+  await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
  const planOption = this.page.locator(`//li[normalize-space(.)='${planName}']`);
  await planOption.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -188,8 +205,9 @@ async selectDistancedoctorname(distance) {
     await this.distancedropdown.click();
 
     // Optional short wait if dropdown takes time to render
-    await this.page.waitForTimeout(500);
+    // await this.page.waitForTimeout(500);
 
+await this.page.waitForLoadState('networkidle', { timeout: 30000 });
     // Locator for the matching option using dynamic XPath
     const optionLocator = this.page.locator(`//li[normalize-space()='${trimmedDistance}']`);
 
@@ -250,6 +268,8 @@ async printDistancedoctornameIfExists() {
      await this.firsthealthfacilities.click();
   }
   async selecthealthFacilities() {
+    await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
  await this.healthFacilities.waitFor({ state: 'visible', timeout: 10000 });
 
   await this.healthFacilities.click();
@@ -262,6 +282,8 @@ async printDistancedoctornameIfExists() {
   }
    async selecthealthfacilitiesDoctorPlan(planName) {
   await this.openplandropdown.click();
+  await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
  const planOption = this.page.locator(`//li[normalize-space(.)='${planName}']`);
  await planOption.waitFor({ state: 'visible', timeout: 10000 });
 
@@ -280,8 +302,9 @@ async selectDistancedoctornamehealth(distance) {
     await this.distancedropdown.click();
 
     // Optional short wait if dropdown takes time to render
-    await this.page.waitForTimeout(500);
+    // await this.page.waitForTimeout(500);
 
+await this.page.waitForLoadState('networkidle', { timeout: 30000 });
     // Locator for the matching option using dynamic XPath
     const optionLocator = this.page.locator(`//li[normalize-space()='${trimmedDistance}']`);
 

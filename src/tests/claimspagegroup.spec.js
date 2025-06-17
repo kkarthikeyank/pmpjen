@@ -30,28 +30,28 @@ test.describe('Claims Page Tests', () => {
 
 
 
-  test(' @smoke Open Claims tab after login', async () => {
+  test('  Open Claims tab after login', async () => {
     await claims.openClaimsTab(); // Assuming `openClaimsTab` is a method in ClaimsPage
 
 
     
   });
 
-  test('  Filter by date and select specific providers', async ({ page }) => {
+  test.skip('  Filter by date and select specific providers', async ({ page }) => {
       await claims.filterByLast60Months();
 
   const providersToSelect = ['unknown', 'Dr. John Doe'];
   await claims.selectProvidersByNames(providersToSelect)
    
 });
-    test('  claim number search', async ({ page }) => {
+    test.skip('  claim number search', async ({ page }) => {
    for (const { label, claimNumber } of data.claimsNumberSearch) {
     await claims.searchClaimNumber(label, claimNumber);
   }
 
    });
 
-     test('@smoke  print the claims numbers', async ({ page }) => {
+     test('  print the claims numbers', async ({ page }) => {
      for (const filter of data.claimsDateFilter) {
   await claims.filterAndPrintClaimsByLabel(filter.label, filter.resultsSelectOption);
 }

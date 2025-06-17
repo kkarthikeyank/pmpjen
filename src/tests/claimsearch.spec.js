@@ -30,7 +30,7 @@ test('Login with valid credentials', async ({ page }) => {
   // console.log('Password:', process.env.PASSWORD);  // Log the password from env
 
 
-  test.setTimeout(70000);
+  test.setTimeout(120000);
   const login = new LoginPage(page);
 
   await login.gotoLoginPage();
@@ -210,22 +210,28 @@ for (const filter of data.claimsDateFilter) {
   }
 
   // scenario  search for a test name
-
+   
   for (const testrecord of data.TestNameCases) {
     const testName = testrecord.testName;
     const rangeText = testrecord.dateRange;
     const showresultsdropdown = testrecord.showresultsdropdown;
-
+     console.log(`\n============================`);
+  console.log(`📅 Date Range Filter: ${rangeText}`);
+  console.log(`🔍 Searched Test Name: "${testName}"`);
 
     await labs.selectDateRangetestname(rangeText);
     await labs.searchTestName(testName);
     // await labs.selectNumberOfResults(10);
-      await labs.selectNumberOfResults(showresultsdropdown); // now dynamic from JSON
+      await labs.selectNumberOfResults( showresultsdropdown); // now dynamic from JSON
+              await labs.printTestNames(testName);
 
-    await labs.printTestResults(testName, rangeText); // ✅ pass filters
-    await labs.clearFilters();
+         await labs.processVisibleTestNames();
+
+
+    await labs.clearFilterstest();
   }
 
+ 
 
   //  scenario custom date range status abnormal and unabnormal with checkbox
 

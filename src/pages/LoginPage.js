@@ -5,11 +5,17 @@ export class LoginPage {
     this.page = page;
   }
 
-  async gotoLoginPage() {
-    await this.page.goto('https://hikepmp-dev.smilecdr.com/member-portal/#/login');
-    // await this.page.goto(process.env.LOGIN_URL);
-  }
-
+  // async gotoLoginPage() {
+  //   await this.page.goto('https://hikepmp-dev.smilecdr.com/member-portal/#/login');
+  //   // await this.page.goto(process.env.LOGIN_URL);
+  // }
+async gotoLoginPage() {
+  await this.page.goto('https://hikepmp-dev.smilecdr.com/member-portal/#/login', {
+    waitUntil: 'domcontentloaded', // Wait until DOM is ready (faster for SPAs)
+    timeout: 60000                 // 60 seconds timeout for slower environments
+  });
+}
+// }
   // async gotoLoginPage() {
   //   const loginUrl = process.env.LOGIN_URL || 'https://hikepmp-dev.smilecdr.com/member-portal/#/login';  // Fallback URL
   //   console.log('Using login URL:', loginUrl);  // Debug: Print the login URL

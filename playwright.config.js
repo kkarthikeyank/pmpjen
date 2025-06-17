@@ -26,10 +26,8 @@ dotenv.config({ path: './env/.env.stage' });
 export default defineConfig({
   
  
-  expect: {
-    timeout: 10000 
-   },
-
+    
+ timeout: 100000 ,
 
   testDir: './src/tests',
   /* Run tests in files in parallel */
@@ -44,17 +42,17 @@ export default defineConfig({
   reporter: [
     ['html'],
     ['list'],
-     ['allure-playwright'],
+   ['allure-playwright'],
     ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
     // baseURL: process.env.LOGIN_URL,
-    baseURL: process.env.LOGIN_URL,  // You can use it as a baseURL if needed
-
-    actionTimeout: 10 * 1000,
-    navigationTimeout: 30 * 1000,
+    // baseURL: process.env.LOGIN_URL,  // You can use it as a baseURL if needed
+    baseURL: 'https://fhirapi-dev.healthpartnersplans.com/fhir-request',
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

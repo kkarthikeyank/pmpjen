@@ -53,6 +53,13 @@ export class LabsPage {
     this.testnamesearchBox = page.getByRole('textbox', { name: 'ex. Triglycerides' });
     this.testNameLocators = page.locator("//div[@data-id='labsCardObjectResultsDiv']//div[contains(@class, 'row')]"); // custom
     this.testnameonly=page.locator("//div[@data-id='labsCardObjectResultsDiv']//div[contains(@class, 'row-cols-2')]/span[1]")
+    this.expandButton = page.locator("//button[@data-id='labsTestComponentInfoHeadingCollapse']");
+      this.viewdetails = page.locator("//button[contains(@id, 'viewDetails')]");
+
+this.returnButton = page.locator("//a[@data-id='labsGoBack']");
+this.testNameLocators = page.locator("//div[@data-id='labsCardObjectResultsDiv']//div[contains(@class, 'row')]");
+
+this.testNameLocators = page.locator("//div[@data-id='labsCardObjectResultsDiv']//div[contains(@class, 'row')]");
 
     this.testnamewithabnormal=page.locator('//div[contains(@class, "row-cols-2")]/span')
 
@@ -70,8 +77,9 @@ export class LabsPage {
   
   async openlabsTab() {
     // Ensure the Claims tab is visible before clicking
-    await this.labsTab.waitFor({ state: 'visible', timeout: 20000 });
+    await this.page.waitForSelector('#navLink-LABS', { state: 'visible' });
     await this.labsTab.click();
+    await this.page.waitForLoadState('networkidle');
 
     // Optionally, wait for the page to load after clicking the  tab (if it redirects)
     // await this.page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 });
@@ -83,12 +91,18 @@ export class LabsPage {
      
 
     async selectDateRangephysicain(rangeText) {
+    await this.last36MonthsButton.waitFor({ state: 'visible', timeout: 15000 });
     await this.last36MonthsButton.click();
     await this.page.getByText(rangeText).click();
   }
 
   async searchPhysician(name) {
+      //  await this.page.waitForSelector('#labsFilterPhysicianSearchInput', { state: 'visible' });
+   await this.page.waitForLoadState('networkidle');
+      await expect(this.physiciansearchinput).toBeVisible({ timeout: 10000 });
+
     await this.physiciansearchinput.click();
+
     await this.physiciansearchinput.fill(name);
    await this.physiciansearchinput.waitFor({ state: 'visible' });
    await this.physiciansearchinput.click();
@@ -104,7 +118,8 @@ export class LabsPage {
   console.log(`Date Range: ${rangeText}`);
   console.log(`Physician Name Searched: ${name}`);
 
-  await this.page.waitForTimeout(1000); // give time for search results to load
+  // await this.page.waitForTimeout(1000); // give time for search results to load
+  await this.page.waitForLoadState('networkidle'); // wait for network to be idle
 
   const count = await this.physicianNameElements.count();
 
@@ -124,6 +139,8 @@ export class LabsPage {
        // scenario  search with date filter  for a labvendor
 
    async selectDateRangelab(rangeText) {
+      await this.page.waitForSelector('//button[@id="dropdownDateFilterButton"]', { state: 'visible' });
+
     await this.last36MonthsButton.click();
     await this.page.getByText(rangeText).click();
   }
@@ -146,7 +163,8 @@ async logLabResults(name, rangeText) {
   console.log(`Date Range: ${rangeText}`);
   console.log(`Lab Vendor Name Searched: ${name}`);
 
-  await this.page.waitForTimeout(1000); // allow results to load
+  // await this.page.waitForTimeout(1000); // allow results to load
+    await this.page.waitForLoadState('networkidle');
 
   const count = await this.labNameElements.count();
 
@@ -168,7 +186,11 @@ async logLabResults(name, rangeText) {
 
 // scenario  search for a test name
 
+
+// scenario  search for a test name
+
     async selectDateRangetestname(rangeText) {
+
     await this.last36MonthsButton.click();
     await this.page.getByText(rangeText).click();
   }
@@ -181,45 +203,163 @@ async logLabResults(name, rangeText) {
   }
 async selectNumberOfResults(count) {
  const drop= await this.page.getByLabel('select number of results').selectOption(count.toString());
-  console.log("object==============================================================================================",drop)
-   await this.applyButton.click();
+  console.log("changed the dropdown for showmoreresults",drop)
+   await this.applyButton.click(); 
+
+    // await this.page.waitForTimeout(3000); // waits 3 seconds (use as last resort)
+await this.testNameLocators.first().waitFor({ state: 'visible', timeout: 10000 });
+
 }
-async printTestResults(searchedName, rangeText) {
-  console.log(`\n--- Filter Selection ---`);
-  console.log(`Date Range: ${rangeText}`);
-  console.log(`Test Name Searched: ${searchedName}`);
 
-  await this.page.waitForTimeout(1000); // wait for results to appear
 
-  const count = await this.testNameLocators.count();
-  let matchFound = false;
+ // Logs only the test names from search results
+  async printTestNames(testName) {
+    const count = await this.testNameLocators.count();
+      console.log(`\n🔍 Searched Test Name: "${testName}"`);
 
-  for (let i = 0; i < count; i++) {
-    const fullText = await this.testNameLocators.nth(i).textContent();
-    const trimmedText = fullText.trim();
 
-    // Match exactly or case-insensitively (adjust as needed)
-    if (trimmedText.includes(searchedName)) {
-      console.log(`Test Name ${i + 1}: ${trimmedText}`);
-      matchFound = true;
+    if (count === 0) {
+      console.log('[INFO] No test records found.');
+      return;
+    }
+
+    console.log(`[INFO] Found ${count} test entries:\n`);
+
+    for (let i = 0; i < count; i++) {
+      const item = this.testNameLocators.nth(i);
+      const rawText = await item.innerText();
+
+      const lines = rawText.split('\n').map(line => line.trim()).filter(Boolean);
+      const testName = lines[0] || 'Unknown Test Name';
+
+      console.log(`  📌 Name      : ${testName}`);
     }
   }
 
-  if (!matchFound) {
-    console.log('No test names found');
+  // Opens each test's detail view (if visible), expands, and returns
+  async processVisibleTestNames() {
+    const count = await this.viewdetails.count();
+
+    if (count === 0) {
+      console.log('[INFO] No visible test names. Skipping View Details step.');
+      return;
+    }
+
+    for (let i = 0; i < count; i++) {
+      const button = this.viewdetails.nth(i);
+      if (await button.isVisible()) {
+        console.log(`[INFO] Clicking View Details for test ${i + 1}`);
+        await button.click();
+                // await this.page.waitForTimeout(2000); // waits 3 seconds (use as last resort)
+
+        //  await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+         
+    // ✅ Take full-page screenshot after opening View Details
+    // await this.page.screenshot({
+    //   path: `screenshots/view_details_test_${i + 1}.png`,
+    //   fullPage: true
+    // })
+        // await this.expandButton.waitFor({ state: 'visible', timeout: 5000 });
+                // await this.expandButton.first().scrollIntoViewIfNeeded();
+
+        console.log('→ Clicked Expand');
+        // await this.page.waitForSelector("//button[@data-id='labsTestComponentInfoHeadingCollapse']", { state: 'visible' });
+        await this.expandButton.first().waitFor({ state: 'visible', timeout: 10000 });
+
+        await this.expandButton.click();
+
+         await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+
+        await this.returnButton.waitFor({ state: 'visible', timeout: 5000 });
+        console.log('→ Clicked Return');
+        await this.returnButton.click();
+
+         if (i < count - 1) {
+      try {
+        await this.page.waitForFunction(() => {
+          return document.querySelectorAll("div[data-id='labsCardObjectResultsDiv'] .row").length > 0;
+        }, { timeout: 10000 });
+        console.log('[INFO] Returned to test list.');
+      } catch {
+        console.warn('⚠️ Test list did not reload after return. Skipping remaining steps.');
+        return;
+      }
+    }
+  } else {
+    console.log(`[INFO] Test ${i + 1} is not visible. Skipping.`);
   }
+    }
+  }
+   async clearFilterstest() {
+    // await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  // console.log('[INFO] Page scrolled to bottom');
+    // await this.page.waitForSelector('//a[normalize-space()="Clear"]', { state: 'visible' });
+    await this.page.waitForLoadState('networkidle'); // or 'domcontentloaded'
 
-  console.log(); // spacing
-}
+    await this.page.getByText('Clear', { exact: true }).waitFor({ state: 'visible' });
 
-  
-   async clearFilters() {
-    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  console.log('[INFO] Page scrolled to bottom');
 
     await this.clearButton.click();
    
   }
+
+//     async selectDateRangetestname(rangeText) {
+//     await this.last36MonthsButton.click();
+//     await this.page.getByText(rangeText).click();
+//   }
+
+//   async searchTestName(name) {
+//     await this.testnamesearchBox.click();
+//     await this.testnamesearchBox.fill(name);
+   
+   
+//   }
+// async selectNumberOfResults(count) {
+//  const drop= await this.page.getByLabel('select number of results').selectOption(count.toString());
+//   console.log("object==============================================================================================",drop)
+//    await this.applyButton.click();
+// }
+// async printTestResults(searchedName, rangeText) {
+//   console.log(`\n--- Filter Selection ---`);
+//   console.log(`Date Range: ${rangeText}`);
+//   console.log(`Test Name Searched: ${searchedName}`);
+
+//   await this.page.waitForTimeout(1000); // wait for results to appear
+
+//   const count = await this.testNameLocators.count();
+//   let matchFound = false;
+
+//   for (let i = 0; i < count; i++) {
+//     const fullText = await this.testNameLocators.nth(i).textContent();
+//     const trimmedText = fullText.trim();
+
+//     // Match exactly or case-insensitively (adjust as needed)
+//     if (trimmedText.includes(searchedName)) {
+//       console.log(`Test Name ${i + 1}: ${trimmedText}`);
+//       matchFound = true;
+//     }
+//   }
+
+//   if (!matchFound) {
+//     console.log('No test names found');
+//   }
+
+//   console.log(); // spacing
+// }
+
+  
+  //  async clearFilters() {
+  //   // await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  // console.log('[INFO] Page scrolled to bottom');
+ // Wait for the element to appear and be visible
+// await this.page.waitForSelector(    '//a[normalize-space()="Clear"]', { state: 'visible', timeout: 10000 });
+
+
+
+// Then perform the click
+  //   await this.clearButton.click();
+   
+  // }
 
 //  scenario custom date range status abnormal and unabnormal with checkbox
 
@@ -240,6 +380,7 @@ async printTestResults(searchedName, rangeText) {
 
 
   async selectYear(value) {
+    await this.yearDropdown.waitFor({ state: 'visible', timeout: 10000 });
     await this.yearDropdown.selectOption({ value });
   }
 
@@ -265,6 +406,8 @@ async printTestResults(searchedName, rangeText) {
     // End Date
     await this.selectYear(end.year);
     await this.selectMonth(end.month);
+        await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
     await this.dateCell(end.dayName, end.monthName, end.day, end.year).click();
   }
 
@@ -277,10 +420,10 @@ async checkAbnormalFilter() {
   }
 
   await this.applyButton.click();
-    await this.page.evaluate(() => {
-    window.scrollBy(0, 500); // Scroll down by 500 pixels
-  });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+  //   await this.page.evaluate(() => {
+  //   window.scrollBy(0, 500); // Scroll down by 500 pixels
+  // });
+  // await this.page.waitForTimeout(500); // Small pause after scroll
 }
 
 async uncheckAbnormalFilter() {
@@ -290,10 +433,10 @@ async uncheckAbnormalFilter() {
   }
   await this.applyButton.click();
 
-  await this.page.evaluate(() => {
-    window.scrollBy(0, 500); // Scroll down by 500 pixels
-  });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+  // await this.page.evaluate(() => {
+  //   window.scrollBy(0, 500); // Scroll down by 500 pixels
+  // });
+  // await this.page.waitForTimeout(500); // Small pause after scroll
 
 }
 
@@ -377,10 +520,14 @@ async printNonAbnormalTestNames() {
     await this.page.evaluate(() => {
     window.scrollBy(0, 500); // Scroll down by 500 pixels
   });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+  // await this.page.waitForTimeout(500); // Small pause after scroll
+      await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
 }
 
 async uncheckboxphysician() {
+  await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
   const isChecked = await this.checkboxAbnormal.isChecked();
   if (isChecked) {
     await this.checkboxAbnormal.uncheck();
@@ -392,7 +539,9 @@ async uncheckboxphysician() {
   await this.page.evaluate(() => {
     window.scrollBy(0, 500); // Scroll down by 500 pixels
   });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+  // await this.page.waitForTimeout(500); // Small pause after scroll
+      await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
 
 }
 async printPhysicianNames() {
@@ -452,8 +601,10 @@ async printNonAbnormalpy() {
 
 //  scenario : search for abnormal check  and uncheck status  test results with test name
 
-
    async searchtestnameabnormalcheck(rangeText) {
+
+  await this.page.waitForSelector('//button[@id="dropdownDateFilterButton"]', { state: 'visible' });
+
     await this.last36MonthsButton.click();
     // await this.page.getByText(rangeText).click();
     await this.page.locator('li.dropdown-item', { hasText: rangeText }).click();
@@ -477,22 +628,28 @@ async printNonAbnormalpy() {
     await this.page.evaluate(() => {
     window.scrollBy(0, 500); // Scroll down by 500 pixels
   });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+  // await this.page.waitForTimeout(500); // Small pause after scroll
+  await this.page.waitForSelector('//input[@id="checkboxAbnormal"]', { state: 'visible' });
 }
 
 async uncheckboxtestname() {
   const isChecked = await this.checkboxAbnormal.isChecked();
   if (isChecked) {
+    await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
     await this.checkboxAbnormal.uncheck();
         console.log("checkbox unchecked ")
 
   }
+  await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
   await this.applyButton.click();
 
   await this.page.evaluate(() => {
     window.scrollBy(0, 500); // Scroll down by 500 pixels
   });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+  // await this.page.waitForTimeout(500); // Small pause after scroll
+   await this.page.waitForSelector("//div[@data-id='labsCardObjectResultsDiv']//div[contains(@class, 'row-cols-2')]/span[1]", { state: 'visible' });
 
 }
 async printTestNames() {
@@ -581,20 +738,28 @@ async searchlabnameabnormalcheck(rangeText) {
     await this.page.evaluate(() => {
     window.scrollBy(0, 500); // Scroll down by 500 pixels
   });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+  // await this.page.waitForTimeout(500); // Small pause after scroll
+  await this.page.waitForSelector('//input[@id="checkboxAbnormal"]', { state: 'visible' });
 }
 
 async uncheckboxlabname() {
   const isChecked = await this.checkboxAbnormal.isChecked();
   if (isChecked) {
+    await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
     await this.checkboxAbnormal.uncheck();
   }
-  await this.applyButton.click();
+  // await this.applyButton.click();
+  await this.applyButton.waitFor({ state: 'visible', timeout: 15000 });
+await this.applyButton.click();
+
 
   await this.page.evaluate(() => {
     window.scrollBy(0, 500); // Scroll down by 500 pixels
   });
-  await this.page.waitForTimeout(500); // Small pause after scroll
+   await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+
+  // await this.page.waitForSelector("//p[starts-with(@id, 'labVendorText')]", { state: 'visible' });
 
 }
 async printlabNames() {
