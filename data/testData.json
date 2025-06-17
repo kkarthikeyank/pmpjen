@@ -33,10 +33,11 @@
   ],
   "FiltersList": [
     {
-      "dateRange": "Last 3 Months",
+      "dateRange": "Last 60 Months",
       "providers": [
         "Nicole Koepke"
       ],
+      
       "payees": [
         "Integra Partners Llc"
       ],
@@ -47,26 +48,12 @@
     {
       "dateRange": "Last 3 Months",
       "physicianName": "Scott Down"
-    },
-    {
-      "dateRange": "Last 60 Months",
-      "physicianName": " Scott Down "
     }
   ],
   "LabSearchCases": [
     {
       "dateRange": "Last 3 Months",
       "labName": "Life Labs"
-    },
-    {
-      "dateRange": "Last 60 Months",
-      "labName": "Precision Labs"
-
-
-    },
-    {
-      "dateRange": "Last 3 Months",
-      "labName": "XYZ Medical"
     }
   ],
   "TestNameCases": [
@@ -81,13 +68,8 @@
       "testName": "Calcium SerPl-sCnc",
       "showresultsdropdown": "10"
 
-    },
-    {
-      "dateRange": "Last 60 Months",
-      "testName": "TEst2",
-      "showresultsdropdown": "10"
-
     }
+   
   ],
   "labsCustomDateRange": [
     {
@@ -104,22 +86,6 @@
         "monthName": "November",
         "day": "30",
         "year": "2024"
-      }
-    },
-    {
-      "startDate": {
-        "dayName": "Monday",
-        "month": "1",
-        "monthName": "January",
-        "day": "1",
-        "year": "2024"
-      },
-      "endDate": {
-        "dayName": "Wednesday",
-        "month": "1",
-        "monthName": "January",
-        "day": "1",
-        "year": "2025"
       }
     }
   ],
