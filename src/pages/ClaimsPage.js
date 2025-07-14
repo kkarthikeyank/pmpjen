@@ -78,6 +78,10 @@ export class ClaimsPage {
   // open claims tab
   async openClaimsTab() {
     // Ensure the Claims tab is visible before clicking
+      await this.page.goBack(); // or close print view if needed
+      // await this.page.keyboard.press('Escape');
+  await this.page.reload(); // <-- This helps reset the DOM if stuck
+    await this.page.waitForLoadState('networkidle');
     await this.claimsTab.waitFor({ state: 'visible', timeout: 20000 });
     await this.claimsTab.click();
 

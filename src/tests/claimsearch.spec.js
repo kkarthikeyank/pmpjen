@@ -16,9 +16,8 @@ import { ProfilePage } from '../pages/profilePage.js';
 
 import { ClaimsPage } from '../pages/ClaimsPage.js'; // <-- ✅ THIS is required
 import { LabsPage } from '../pages/LabsPage.js'; // <-- ✅ THIS is required
+import { NotesPage } from '../pages/notespage.js'; // <-- ✅ THIS is required
 import { ProviderPage } from '../pages/ProviderPage.js';
-
-
 
 
 test('Login with valid credentials', async ({ page }) => {
@@ -65,8 +64,15 @@ test('Login with valid credentials', async ({ page }) => {
     console.warn('⚠️ Member ID is optional for this user.');
   }
 
+// scenario  Click on the "Claims YTD" link
+await dashboardPage.openUsageSection();
+  await dashboardPage.openClaims();
 
+  for  (const claimsytdyears of data.claimsytdyears) {
+    await dashboardPage.selectYear(claimsytdyears);
+  }
 
+  await dashboardPage.goBack();
 
 
   const profilePage = new ProfilePage(page);
@@ -86,7 +92,7 @@ test('Login with valid credentials', async ({ page }) => {
   await profilePage.assertEmailVisible();
   await profilePage.assertGenderVisible();
   await profilePage.assertAddressVisible();
-
+await profilePage.downloadProfileAsPdf('julia-health-notes.pdf');
 
 
 
@@ -336,8 +342,12 @@ for (const filter of data.claimsDateFilter) {
 
   }
 
+    const Notes = new NotesPage(page);
+  // Open the Notes tab
+     await Notes.openNotesTab();
 
-  const provider = new ProviderPage(page);
+  
+     const provider = new ProviderPage(page);
 
   // open the Provider tab
   await provider.openproviderTab();

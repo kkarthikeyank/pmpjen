@@ -363,6 +363,7 @@ export class ProfilePage {
     this.gender = page.locator('#gendertext');
     // this.address = page.locator('#addresstext');
     this.address = page.locator('#addresstext').nth(0);
+    this.printButton = page.getByRole('button', { name: 'Print' });
 
   }
 
@@ -424,5 +425,22 @@ export class ProfilePage {
       console.error('🔴 Address assertion failed:', error.message);
       throw error;
     }
+  }
+
+
+
+   async downloadProfileAsPdf(fileName = 'profile.pdf') {
+    console.log('📄 Clicking on Print button...');
+    await this.printButton.click();
+    await this.page.waitForTimeout(2000); // wait for page to render
+
+    console.log(`💾 Saving PDF as: ${fileName}`);
+    await this.page.pdf({
+      path: fileName,
+      format: 'A4',
+      printBackground: true
+    });
+
+    console.log(`✅ PDF downloaded: ${fileName}`);
   }
 }

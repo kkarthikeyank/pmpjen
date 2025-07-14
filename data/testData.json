@@ -1,6 +1,13 @@
 {
-  "user": "Julia",
+  "user": "julia",
   "password": "Batman123",
+   
+  "claimsytdyears": [
+    "2023",
+    "2022"
+   
+  ],
+  
   "claimsDateFilter": [
   {
     "label": "3 Months",
@@ -13,7 +20,7 @@
 
   }
 ],
-
+ 
   
   "claimsNumberSearch": [
     {
