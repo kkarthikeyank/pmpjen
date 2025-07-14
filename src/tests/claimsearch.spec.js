@@ -77,8 +77,8 @@ await dashboardPage.openUsageSection();
 
   const profilePage = new ProfilePage(page);
 
-  await page.getByTitle('Your profile and settings').click();
-  await page.getByLabel('My Profile').click();
+  // await page.getByTitle('Your profile and settings').click();
+  // await page.getByLabel('My Profile').click();
 
   // const profileName = await profilePage.checkProfileVisibility();
   // const dob = await profilePage.checkDobVisibility();
@@ -86,13 +86,15 @@ await dashboardPage.openUsageSection();
   // const gender = await profilePage.checkGe
 
   // const address = await profilePage.checkAddressVisibility();
+   await profilePage.navigateToProfile();
 
   await profilePage.assertProfileNameVisible();
   await profilePage.assertDobVisible();
   await profilePage.assertEmailVisible();
   await profilePage.assertGenderVisible();
   await profilePage.assertAddressVisible();
-await profilePage.downloadProfileAsPdf('julia-health-notes.pdf');
+
+   await profilePage.downloadProfileAsPdf();  // Download PDF using POM
 
 
 

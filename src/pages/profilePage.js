@@ -363,8 +363,15 @@ export class ProfilePage {
     this.gender = page.locator('#gendertext');
     // this.address = page.locator('#addresstext');
     this.address = page.locator('#addresstext').nth(0);
+     this.profileIcon = page.getByTitle('Your profile and settings');
+    this.profileLink = page.getByLabel('My Profile');
     this.printButton = page.getByRole('button', { name: 'Print' });
 
+  }
+
+async navigateToProfile() {
+    await this.profileIcon.click();
+    await this.profileLink.click();
   }
 
   async assertProfileNameVisible(timeout = 15000) {
@@ -427,12 +434,12 @@ export class ProfilePage {
     }
   }
 
-
-
-   async downloadProfileAsPdf(fileName = 'profile.pdf') {
-    console.log('📄 Clicking on Print button...');
+  async downloadProfileAsPdf(fileName = 'julia-health-notes.pdf') {
+    console.log(`📄 Clicking on Print button...`);
     await this.printButton.click();
-    await this.page.waitForTimeout(2000); // wait for page to render
+
+    // Wait for page to fully render
+    await this.page.waitForTimeout(2000);
 
     console.log(`💾 Saving PDF as: ${fileName}`);
     await this.page.pdf({
@@ -440,7 +447,7 @@ export class ProfilePage {
       format: 'A4',
       printBackground: true
     });
-
     console.log(`✅ PDF downloaded: ${fileName}`);
   }
+   
 }
