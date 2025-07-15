@@ -472,32 +472,72 @@ async navigateToProfile() {
 //   }
 // }
 
-async downloadProfileAsPdf(fileName = 'julia-health-notes.pdf') {
-    console.log(`📄 Clicking Print button...`);
-    await this.printButton.click();
-    await this.page.waitForTimeout(2000);
+// async downloadProfileAsPdf(fileName = 'julia-health-notes.pdf') {
+//     console.log(`📄 Clicking Print button...`);
+//     await this.printButton.click();
+//     await this.page.waitForTimeout(2000);
 
-    const filePath = path.join(__dirname, '..', 'downloads', fileName);
+//     const filePath = path.join(__dirname, '..', 'downloads', fileName);
 
-    try {
-      await this.page.waitForLoadState('networkidle');
-      await this.page.pdf({
-        path: filePath,
-        format: 'A4',
-        printBackground: true,
-      });
-      console.log(`✅ PDF saved: ${filePath}`);
+//     try {
+//       await this.page.waitForLoadState('networkidle');
+//       await this.page.pdf({
+//         path: filePath,
+//         format: 'A4',
+//         printBackground: true,
+//       });
+//       console.log(`✅ PDF saved: ${filePath}`);
 
-      // Return base64 data URL
-      const fileBuffer = fs.readFileSync(filePath);
-      const base64 = fileBuffer.toString('base64');
-      const dataUrl = `data:application/pdf;base64,${base64}`;
-      console.log(`✅ Generated Base64 PDF link`);
-      return dataUrl;
+//       // Return base64 data URL
+//       const fileBuffer = fs.readFileSync(filePath);
+//       const base64 = fileBuffer.toString('base64');
+//       const dataUrl = `data:application/pdf;base64,${base64}`;
+//       console.log(`✅ Generated Base64 PDF link`);
+//       return dataUrl;
 
-    } catch (error) {
-      console.error(`❌ PDF generation failed: ${error.message}`);
-      return null;
-    }
+//     } catch (error) {
+//       console.error(`❌ PDF generation failed: ${error.message}`);
+//       return null;
+//     }
+//   }
+// }
+
+async downloadProfileAsPdf() {
+  console.log('📄 Clicking on Print button...');
+  await this.printButton.click();
+
+  // Wait for content to fully render
+  await this.page.waitForTimeout(2000);
+
+  try {
+    await this.page.waitForLoadState('networkidle');
+
+    // 1. Generate PDF in memory
+    const pdfBuffer = await this.page.pdf({
+      format: 'A4',
+      printBackground: true
+    });
+
+    // 2. Convert buffer to Base64
+    const base64 = pdfBuffer.toString('base64');
+
+    // 3. Use page.evaluate to create a Blob URL in the browser
+    const blobUrl = await this.page.evaluate((base64Pdf) => {
+      const byteCharacters = atob(base64Pdf);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      return URL.createObjectURL(blob);
+    }, base64);
+
+    // 4. Print the short blob link to the console
+    console.log('📎 Short PDF Link:\n', blobUrl);
+    
+  } catch (error) {
+    console.error('❌ PDF generation failed:', error.message);
   }
+}
 }

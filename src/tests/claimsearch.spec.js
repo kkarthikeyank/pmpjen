@@ -97,10 +97,11 @@ await dashboardPage.openUsageSection();
   //  await profilePage.downloadProfileAsPdf();  // Download PDF using POM
 
 
+  await profilePage.downloadProfileAsPdf();
 
-  const base64Link = await profilePage.downloadProfileAsPdf();
-  console.log('📎 Base64 PDF Link:\n', base64Link);
-  
+  // const base64Link = await profilePage.downloadProfileAsPdf();
+  // console.log('📎 Base64 PDF Link:\n', base64Link);
+
   const claims = new ClaimsPage(page);
 
   await claims.openClaimsTab();
