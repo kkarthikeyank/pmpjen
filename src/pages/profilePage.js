@@ -353,7 +353,19 @@
 // import { expect } from '@playwright/test';
 import { expect } from '@playwright/test';
 
+// import fs from 'fs';
+// import path from 'path';
+// import { fileURLToPath } from 'url';
 
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 export class ProfilePage {
   constructor(page) {
     this.page = page;
@@ -434,20 +446,58 @@ async navigateToProfile() {
     }
   }
 
-  async downloadProfileAsPdf(fileName = 'julia-health-notes.pdf') {
-    console.log(`📄 Clicking on Print button...`);
-    await this.printButton.click();
+//    async downloadProfileAsPdf(fileName = 'julia-health-notes.pdf') {
+//     console.log(`📄 Clicking on Profile Print button...`);
+//     await this.printButton.click();
+//     await this.page.waitForTimeout(2000);
 
-    // Wait for page to fully render
+//     const fullPath = path.join(__dirname, '..', 'downloads', fileName);
+
+//     try {
+//       await this.page.waitForLoadState('networkidle');
+//       await this.page.pdf({
+//         path: fullPath,
+//         format: 'A4',
+//         printBackground: true,
+//       });
+//       console.log(`✅ Profile PDF saved: ${fullPath}`);
+
+//       const base64 = fs.readFileSync(fullPath).toString('base64');
+//       const base64Path = path.join(__dirname, '..', 'downloads', 'profile_base64.txt');
+//       fs.writeFileSync(base64Path, base64);
+//       console.log(`✅ Base64 saved: ${base64Path}`);
+//     } catch (error) {
+//       console.error(`❌ Profile PDF generation failed: ${error.message}`);
+//     }
+//   }
+// }
+
+async downloadProfileAsPdf(fileName = 'julia-health-notes.pdf') {
+    console.log(`📄 Clicking Print button...`);
+    await this.printButton.click();
     await this.page.waitForTimeout(2000);
 
-    console.log(`💾 Saving PDF as: ${fileName}`);
-    await this.page.pdf({
-      path: fileName,
-      format: 'A4',
-      printBackground: true
-    });
-    console.log(`✅ PDF downloaded: ${fileName}`);
+    const filePath = path.join(__dirname, '..', 'downloads', fileName);
+
+    try {
+      await this.page.waitForLoadState('networkidle');
+      await this.page.pdf({
+        path: filePath,
+        format: 'A4',
+        printBackground: true,
+      });
+      console.log(`✅ PDF saved: ${filePath}`);
+
+      // Return base64 data URL
+      const fileBuffer = fs.readFileSync(filePath);
+      const base64 = fileBuffer.toString('base64');
+      const dataUrl = `data:application/pdf;base64,${base64}`;
+      console.log(`✅ Generated Base64 PDF link`);
+      return dataUrl;
+
+    } catch (error) {
+      console.error(`❌ PDF generation failed: ${error.message}`);
+      return null;
+    }
   }
-   
 }
