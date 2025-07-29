@@ -8,7 +8,7 @@ test('Login and search for member by first name', async ({ page }) => {
   await page.goto('https://hikepmp-dev.smilecdr.com/admin/member-portal/#/login');
 
   // Wait for login button to appear and click it
-  await page.waitForSelector('//button[@id="loginButton"]');
+
   await page.locator('//button[@id="loginButton"]').click();
   console.log('Login button clicked');
 
