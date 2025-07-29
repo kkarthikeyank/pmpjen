@@ -1,41 +1,29 @@
-// // @ts-check
-// // import { test, expect } from '@playwright/test';
-
-// // test.only('has title', async ({ page }) => {
-// //   await page.goto('https://letcode.in/');
-
-// //   // Expect a title "to contain" a substring.
-// //   await expect(page).toHaveTitle( 'LetCode with Koushik' );
-// // });
-
-// // test('get started link', async ({ page }) => {
-// //   await page.goto('https://playwright.dev/');
-
-// //   // Click the get started link.
-// //   await page.getByRole('link', { name: 'Get started' }).click();
-
-// //   // Expects page to have a heading with the name of Installation.
-// //   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-// // console.log('Test completed successfully.');
-// });
-
-// @ts-check
 import { test, expect } from '@playwright/test';
+
+// Set headless mode to true globally for this test
 test.use({ headless: true });
-test.only('has title', async ({ page }) => {
+
+test('Login and search for member by first name', async ({ page }) => {
+  // Navigate to the login page
   await page.goto('https://hikepmp-dev.smilecdr.com/admin/member-portal/#/login');
-  
-    await page.waitForTimeout(5000); // waits for 2 seconds
-await page.locator('//button[@id="loginButton"]').click();
+
+  // Wait for login button to appear and click it
+  await page.waitForSelector('//button[@id="loginButton"]');
+  await page.locator('//button[@id="loginButton"]').click();
   console.log('Login button clicked');
+
+  // Wait for page to load post-login (increase timeout if slow)
   await page.waitForTimeout(10000);
+
+  // Interact with the search form
+  await page.waitForSelector('//input[@id="lookupFirstName"]');
   await page.locator('//input[@id="lookupFirstName"]').click();
+  await page.locator('//input[@id="lookupFirstName"]').fill('julia');
 
-   await page.locator('//input[@id="lookupFirstName"]').fill('julia');
-
-   await page.locator("//button[normalize-space()='Search']").click();
+  // Click the Search button
+  await page.locator("//button[normalize-space()='Search']").click();
   console.log('Search button clicked');
 
-  // Expect a title "to contain" a substring.
-  // await expect(page).toHaveTitle( 'LetCode with Koushik' );
+  // Optional: Add assertion or verification here
+  // await expect(page.locator('//div[contains(text(), "Expected Result")]')).toBeVisible();
 });
